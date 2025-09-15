@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdleCore", "IdleCore\IdleCore.csproj", "{BC75CBF5-220F-45AC-B71F-786F0E3942D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdleUI", "IdleUI\IdleUI.csproj", "{DEACE4F3-50EE-433A-90E8-2667DCEBD2D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC75CBF5-220F-45AC-B71F-786F0E3942D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC75CBF5-220F-45AC-B71F-786F0E3942D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC75CBF5-220F-45AC-B71F-786F0E3942D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC75CBF5-220F-45AC-B71F-786F0E3942D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEACE4F3-50EE-433A-90E8-2667DCEBD2D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEACE4F3-50EE-433A-90E8-2667DCEBD2D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEACE4F3-50EE-433A-90E8-2667DCEBD2D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEACE4F3-50EE-433A-90E8-2667DCEBD2D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

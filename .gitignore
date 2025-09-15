@@ -1,0 +1,7 @@
+
+# The bin and obj folders are outputs of the editor
+bin
+obj
+
+# The app database shouldn't be checked in
+app.db*
