@@ -1,6 +1,6 @@
+using IdleDB;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using IdleUI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

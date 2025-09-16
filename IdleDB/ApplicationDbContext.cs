@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdleUI.Data;
+namespace IdleDB;
 
 public class ApplicationDbContext : IdentityDbContext
 {

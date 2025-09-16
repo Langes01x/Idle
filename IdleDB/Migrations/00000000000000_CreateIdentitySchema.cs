@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace IdleUI.Data.Migrations
+namespace IdleDB.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

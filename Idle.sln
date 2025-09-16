@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdleCore", "IdleCore\IdleCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdleUI", "IdleUI\IdleUI.csproj", "{DEACE4F3-50EE-433A-90E8-2667DCEBD2D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdleDB", "IdleDB\IdleDB.csproj", "{D3A8710A-E482-4512-8141-03C92B8A3D23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DEACE4F3-50EE-433A-90E8-2667DCEBD2D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEACE4F3-50EE-433A-90E8-2667DCEBD2D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEACE4F3-50EE-433A-90E8-2667DCEBD2D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3A8710A-E482-4512-8141-03C92B8A3D23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A8710A-E482-4512-8141-03C92B8A3D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A8710A-E482-4512-8141-03C92B8A3D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A8710A-E482-4512-8141-03C92B8A3D23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
