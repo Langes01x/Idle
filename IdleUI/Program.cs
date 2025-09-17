@@ -29,6 +29,8 @@ builder.Services.ConfigureApplicationCookie(o =>
     o.SlidingExpiration = true;
 });
 
+builder.Services.AddScoped<IAccountManager, AccountManager>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -4,6 +4,7 @@
 
 
 # Currency types:
+- All currency accumulated via idling should be on a per second basis to prevent need for tracking partial accumulation
 - Player Experience
   - Contributes to account level
   - Limits character level
@@ -16,7 +17,7 @@
   - Obtainable through idling (1 per second per level cleared?) and first-time level rewards
 - Diamond
   - Used to pull characters
-  - Obtainable through idling (1 per hour) and first-time level rewards
+  - Obtainable through idling (1 per second) and first-time level rewards
 
 # Characters
 - Up to 5 stars
@@ -27,7 +28,7 @@
   - 5* = 3% chance
 - Base stats for all rarities are the same (higher rarity not necessary in the early game)
 - Higher stars have higher stat gain per level (higher rarity will be better in the late game)
-- One roll costs 10 diamonds or 10 rolls for 90?
+- One roll costs 3600 diamonds or 10 rolls for 32400?
 - Start with 3 1* character?
 - First gacha guarantees a 3* character?
 

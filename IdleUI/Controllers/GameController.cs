@@ -1,3 +1,4 @@
+using IdleDB;
 using IdleUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,25 +10,44 @@ namespace IdleUI.Controllers
     public class GameController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IAccountManager _accountManager;
 
-        public GameController(UserManager<IdentityUser> userManager)
+        public GameController(UserManager<IdentityUser> userManager, IAccountManager accountManager)
         {
             _userManager = userManager;
+            _accountManager = accountManager;
         }
 
         // GET: GameController
         public async Task<IActionResult> Index()
         {
             // Authorize attribute should prevent not having a user but redirect to home page if something breaks
-            var user = await _userManager.GetUserAsync(User);
-            if (user is null)
+            var userId = _userManager.GetUserId(User);
+            if (userId is null)
             {
-                return RedirectPreserveMethod("./");
+                return RedirectToAction("Index", "Home");
             }
 
-            var id = user.Id;
-            return View(new GameModel { Id = id });
+            var account = await _accountManager.GetOrCreateAccount(userId);
+
+            return View(new GameModel { Account = account });
         }
 
+        // POST: GameController
+        public async Task<IActionResult> Collect()
+        {
+            // Authorize attribute should prevent not having a user but redirect to home page if something breaks
+            var userId = _userManager.GetUserId(User);
+            if (userId is null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var account = await _accountManager.GetOrCreateAccount(userId);
+            account.CollectIdleRewards();
+            await _accountManager.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }

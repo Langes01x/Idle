@@ -30,3 +30,15 @@ body {
 .form-floating>label {
   color: black;
 }
+
+.account-info-grid {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+}
+
+.rewards-box {
+  background-color: darkblue;
+  padding: .5rem;
+  border-radius: .25rem;
+  display: inline-block;
+}

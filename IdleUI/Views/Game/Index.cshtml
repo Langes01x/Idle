@@ -3,8 +3,52 @@
     ViewData["Title"] = "Idle Game";
 }
 
-<div class="text-center">
-    <h1 class="display-4 text-light">User ID: @Model.Id</h1>
-    <p class="text-light">Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET
-            Core</a>.</p>
+<div>
+    <h1 class="display-4">User ID: @Model.Account.Id</h1>
+    <div class="account-info-grid">
+        <label>Experience:</label><label>@Model.Account.Experience</label>
+        <label>Gold:</label><label>@Model.Account.Gold</label>
+        <label>Diamonds:</label><label>@Model.Account.Diamonds</label>
+    </div>
+    <div class="rewards-box">
+        <form class="form-inline" asp-action="Collect">
+            <button type="submit" class="btn btn-primary">Collect Rewards</button>
+        </form>
+        <div class="account-info-grid">
+            <label>Experience:</label><label id="experienceRewards">0</label>
+            <label>Gold:</label><label id="goldRewards">0</label>
+            <label>Diamonds:</label><label id="diamondsRewards">0</label>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var experienceRewards = document.getElementById("experienceRewards");
+        var goldRewards = document.getElementById("goldRewards");
+        var diamondsRewards = document.getElementById("diamondsRewards");
+
+        var experienceRate = @Model.Account.GetExperienceAccumulationRate();
+        var goldRate = @Model.Account.GetGoldAccumulationRate();
+        var diamondsRate = @Model.Account.GetDiamondAccumulationRate();
+
+        var accumulatedSeconds = @Model.Account.GetAccumulationTime(DateTime.UtcNow);
+        var accumulatedExperience = 0;
+        var accumulatedGold = 0;
+        var accumulatedDiamonds = 0;
+
+        // Update collection rewards right away
+        updateCollectionRewards();
+
+        // Update collection rewards every second
+        setInterval(updateCollectionRewards, 1000);
+
+        function updateCollectionRewards() {
+            accumulatedExperience = experienceRate * accumulatedSeconds;
+            accumulatedGold = goldRate * accumulatedSeconds;
+            accumulatedDiamonds = diamondsRate * accumulatedSeconds;
+
+            experienceRewards.innerHTML = accumulatedExperience;
+            goldRewards.innerHTML = accumulatedGold;
+            diamondsRewards.innerHTML = accumulatedDiamonds;
+            ++accumulatedSeconds;
+        }
+    </script>
 </div>
