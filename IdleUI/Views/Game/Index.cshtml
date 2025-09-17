@@ -6,9 +6,9 @@
 <div>
     <h1 class="display-4">User ID: @Model.Account.Id</h1>
     <div class="account-info-grid">
-        <label>Experience:</label><label>@Model.Account.Experience</label>
-        <label>Gold:</label><label>@Model.Account.Gold</label>
-        <label>Diamonds:</label><label>@Model.Account.Diamonds</label>
+        <label>Experience:</label><label id="experienceTotal">@Model.Account.Experience</label>
+        <label>Gold:</label><label id="goldTotal">@Model.Account.Gold</label>
+        <label>Diamonds:</label><label id="diamondsTotal">@Model.Account.Diamonds</label>
     </div>
     <div class="rewards-box">
         <form class="form-inline" asp-action="Collect">
@@ -21,6 +21,17 @@
         </div>
     </div>
     <script type="text/javascript">
+        var formatter = new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 3 });
+
+        // Format totals to be compact so they are consistent with rewards
+        var experienceTotal = document.getElementById("experienceTotal");
+        var goldTotal = document.getElementById("goldTotal");
+        var diamondsTotal = document.getElementById("diamondsTotal");
+
+        experienceTotal.innerHTML = formatter.format(experienceTotal.innerHTML);
+        goldTotal.innerHTML = formatter.format(goldTotal.innerHTML);
+        diamondsTotal.innerHTML = formatter.format(diamondsTotal.innerHTML);
+
         var experienceRewards = document.getElementById("experienceRewards");
         var goldRewards = document.getElementById("goldRewards");
         var diamondsRewards = document.getElementById("diamondsRewards");
@@ -30,9 +41,6 @@
         var diamondsRate = @Model.Account.GetDiamondAccumulationRate();
 
         var accumulatedSeconds = @Model.Account.GetAccumulationTime(DateTime.UtcNow);
-        var accumulatedExperience = 0;
-        var accumulatedGold = 0;
-        var accumulatedDiamonds = 0;
 
         // Update collection rewards right away
         updateCollectionRewards();
@@ -41,13 +49,9 @@
         setInterval(updateCollectionRewards, 1000);
 
         function updateCollectionRewards() {
-            accumulatedExperience = experienceRate * accumulatedSeconds;
-            accumulatedGold = goldRate * accumulatedSeconds;
-            accumulatedDiamonds = diamondsRate * accumulatedSeconds;
-
-            experienceRewards.innerHTML = accumulatedExperience;
-            goldRewards.innerHTML = accumulatedGold;
-            diamondsRewards.innerHTML = accumulatedDiamonds;
+            experienceRewards.innerHTML = formatter.format(experienceRate * accumulatedSeconds);
+            goldRewards.innerHTML = formatter.format(goldRate * accumulatedSeconds);
+            diamondsRewards.innerHTML = formatter.format(diamondsRate * accumulatedSeconds);
             ++accumulatedSeconds;
         }
     </script>
