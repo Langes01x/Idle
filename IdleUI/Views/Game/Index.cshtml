@@ -6,18 +6,18 @@
 <div>
     <h1 class="display-4">User ID: @Model.Account.Id</h1>
     <div class="account-info-grid">
-        <label>Experience:</label><label id="experienceTotal">@Model.Account.Experience</label>
-        <label>Gold:</label><label id="goldTotal">@Model.Account.Gold</label>
-        <label>Diamonds:</label><label id="diamondsTotal">@Model.Account.Diamonds</label>
+        <label>Experience:</label><output id="experienceTotal">@Model.Account.Experience</output>
+        <label>Gold:</label><output id="goldTotal">@Model.Account.Gold</output>
+        <label>Diamonds:</label><output id="diamondsTotal">@Model.Account.Diamonds</output>
     </div>
     <div class="rewards-box">
         <form class="form-inline" asp-action="Collect">
             <button type="submit" class="btn btn-primary">Collect Rewards</button>
         </form>
         <div class="account-info-grid">
-            <label>Experience:</label><label id="experienceRewards">0</label>
-            <label>Gold:</label><label id="goldRewards">0</label>
-            <label>Diamonds:</label><label id="diamondsRewards">0</label>
+            <label>Experience:</label><output id="experienceRewards">0</output>
+            <label>Gold:</label><output id="goldRewards">0</output>
+            <label>Diamonds:</label><output id="diamondsRewards">0</output>
         </div>
     </div>
     <script type="text/javascript">
