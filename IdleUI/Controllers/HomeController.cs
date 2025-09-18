@@ -1,6 +1,6 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using IdleUI.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IdleUI.Controllers;
 
@@ -13,16 +13,19 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    // Display the home page.
     public IActionResult Index()
     {
         return View();
     }
 
+    // Display the privacy page.
     public IActionResult Privacy()
     {
         return View();
     }
 
+    // Display the error page.
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

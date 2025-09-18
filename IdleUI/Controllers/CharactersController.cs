@@ -18,7 +18,7 @@ namespace IdleUI.Controllers
             _accountManager = accountManager;
         }
 
-        // GET: CharactersController
+        // Display a list of characters on your account.
         public async Task<IActionResult> Index()
         {
             // Authorize attribute should prevent not having a user but redirect to home page if something breaks

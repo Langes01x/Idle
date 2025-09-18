@@ -18,7 +18,7 @@ namespace IdleUI.Controllers
             _accountManager = accountManager;
         }
 
-        // GET: GameController
+        // Display the main game screen.
         public async Task<IActionResult> Index()
         {
             // Authorize attribute should prevent not having a user but redirect to home page if something breaks
@@ -33,7 +33,7 @@ namespace IdleUI.Controllers
             return View(new GameModel { Account = account });
         }
 
-        // POST: GameController
+        // Collect idle rewards.
         public async Task<IActionResult> Collect()
         {
             // Authorize attribute should prevent not having a user but redirect to home page if something breaks
