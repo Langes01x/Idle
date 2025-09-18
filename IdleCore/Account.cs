@@ -9,6 +9,8 @@ public class Account
     public long Diamonds { get; set; }
     public long LevelsCleared { get; set; }
 
+    public ICollection<Character> Characters { get; set; } = null!;
+
     public long GetExperienceAccumulationRate()
     {
         return LevelsCleared + 1;

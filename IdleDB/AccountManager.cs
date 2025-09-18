@@ -1,10 +1,12 @@
 using IdleCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdleDB;
 
 public interface IAccountManager
 {
     Task<Account> GetOrCreateAccount(string userId);
+    Task<IList<Character>> GetCharacters(string userId);
     Task SaveChanges();
 }
 
@@ -33,6 +35,16 @@ public class AccountManager : IAccountManager
         }
 
         return account;
+    }
+
+    /// <summary>
+    /// Gets all characters for a user's account.
+    /// </summary>
+    /// <param name="userId">The user's ID</param>
+    /// <returns>The user's characters</returns>
+    public async Task<IList<Character>> GetCharacters(string userId)
+    {
+        return await _context.Characters.Where(c => c.AccountId == userId).ToListAsync();
     }
 
     public async Task SaveChanges()

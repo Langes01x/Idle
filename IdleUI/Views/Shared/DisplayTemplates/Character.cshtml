@@ -1,0 +1,19 @@
+﻿@model IdleCore.Character
+
+<div class="rounded-box">
+    <div class="info-grid">
+        <label>Name:</label><output>@Model.FirstName @Model.LastName</output>
+        <label>Level:</label><output>@Model.Level</output>
+        <label>Rarity:</label><output>@Model.Rarity</output>
+        <label>Class:</label><output>@Model.Class</output>
+    </div>
+    <hr />
+    <div class="info-grid">
+        <label>Strength:</label><output>@Model.Strength</output>
+        <label>Intelligence:</label><output>@Model.Intelligence</output>
+        <label>Dexterity:</label><output>@Model.Dexterity</output>
+        <label>Vitality:</label><output>@Model.Vitality</output>
+        <label>Constitution:</label><output>@Model.Constitution</output>
+        <label>Wisdom:</label><output>@Model.Wisdom</output>
+    </div>
+</div>

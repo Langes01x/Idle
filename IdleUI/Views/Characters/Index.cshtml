@@ -1,0 +1,13 @@
+﻿@model IdleUI.Models.CharactersModel
+@{
+    ViewData["Title"] = "Characters";
+}
+
+<div>
+    <form class="form-inline" asp-controller="Game" asp-action="Index">
+        <button type="submit" class="btn btn-primary">&lt;&lt; Back</button>
+    </form>
+</div>
+<div>
+    @Html.DisplayFor(m => m.Characters)
+</div>

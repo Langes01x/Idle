@@ -14,6 +14,8 @@ public class ApplicationDbContext : IdentityDbContext
 
     public DbSet<Account> Accounts { get; set; } = default!;
 
+    public DbSet<Character> Characters { get; set; } = default!;
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -22,6 +24,12 @@ public class ApplicationDbContext : IdentityDbContext
         {
             b.HasKey(a => a.Id);
             b.HasOne<IdentityUser>().WithOne().HasPrincipalKey<IdentityUser>(a => a.Id).HasForeignKey<Account>(u => u.Id).IsRequired();
+        });
+
+        builder.Entity<Character>(b =>
+        {
+            b.HasKey(c => c.Id);
+            b.HasOne(c => c.Account).WithMany(a => a.Characters).HasPrincipalKey(a => a.Id).HasForeignKey(c => c.AccountId).IsRequired();
         });
     }
 }
