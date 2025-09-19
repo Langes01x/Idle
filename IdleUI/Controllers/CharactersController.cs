@@ -51,7 +51,7 @@ namespace IdleUI.Controllers
             if (account.Diamonds < (quantity * _summonHelper.SummonCost))
             {
                 ModelState.AddModelError("quantity", $"Not enough diamonds to summon {quantity} times");
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             var newCharacters = _summonHelper.SummonCharacters(account, quantity).ToArray();
