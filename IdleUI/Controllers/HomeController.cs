@@ -14,12 +14,14 @@ public class HomeController : Controller
     }
 
     // Display the home page.
+    [HttpGet]
     public IActionResult Index()
     {
         return View();
     }
 
     // Display the privacy page.
+    [HttpGet]
     public IActionResult Privacy()
     {
         return View();

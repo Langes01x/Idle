@@ -19,6 +19,7 @@ namespace IdleUI.Controllers
         }
 
         // Display the main game screen.
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             // Authorize attribute should prevent not having a user but redirect to home page if something breaks
@@ -34,6 +35,7 @@ namespace IdleUI.Controllers
         }
 
         // Collect idle rewards.
+        [HttpPost]
         public async Task<IActionResult> Collect()
         {
             // Authorize attribute should prevent not having a user but redirect to home page if something breaks

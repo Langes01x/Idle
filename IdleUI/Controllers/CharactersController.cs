@@ -22,6 +22,7 @@ namespace IdleUI.Controllers
         }
 
         // Display a list of characters on your account.
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             // Authorize attribute should prevent not having a user but redirect to home page if something breaks
@@ -37,6 +38,7 @@ namespace IdleUI.Controllers
         }
 
         // Summon new characters
+        [HttpPost]
         public async Task<IActionResult> Summon(int quantity)
         {
             // Authorize attribute should prevent not having a user but redirect to home page if something breaks
