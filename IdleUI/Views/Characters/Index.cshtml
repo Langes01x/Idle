@@ -30,15 +30,15 @@
     </script>
 }
 <div>
-    <form class="form-inline" asp-controller="Game" asp-action="Index">
+    <form class="form-inline" asp-controller="Game" asp-action="Index" method="get">
         <button type="submit" class="btn btn-primary">&lt;&lt; Back</button>
     </form>
-    <form class="form-inline" asp-action="Summon">
+    <form class="form-inline" asp-action="Summon" method="post">
         <input type="hidden" name="quantity" value="1" />
         <button type="submit" class="btn btn-primary" @(Model.Account.Diamonds < Model.SummonCost ? " disabled" :
                                                                   "")>Summon 1x for @Model.SummonCost</button>
     </form>
-    <form class="form-inline" asp-action="Summon">
+    <form class="form-inline" asp-action="Summon" method="post">
         <input type="hidden" name="quantity" value="10" />
         <button type="submit" class="btn btn-primary" @(Model.Account.Diamonds < Model.SummonCost * 10 ? " disabled" :
                                                                   "")>Summon 10x for @(Model.SummonCost * 10)</button>

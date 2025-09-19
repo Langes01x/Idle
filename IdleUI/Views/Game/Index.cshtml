@@ -11,7 +11,7 @@
         <label>Diamonds:</label><output id="diamondsTotal">@Model.Account.Diamonds</output>
     </div>
     <div class="rounded-box">
-        <form class="form" asp-action="Collect">
+        <form class="form" asp-action="Collect" method="post">
             <button type="submit" class="btn btn-primary">Collect Rewards</button>
         </form>
         <div class="info-grid">
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div>
-        <form class="form-inline" asp-controller="Characters" asp-action="Index">
+        <form class="form-inline" asp-controller="Characters" asp-action="Index" method="get">
             <button type="submit" class="btn btn-primary">Characters</button>
         </form>
     </div>
