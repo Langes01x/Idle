@@ -1,4 +1,4 @@
-namespace IdleCore;
+namespace IdleCore.Model;
 
 // First names are based off of Finnish names
 public enum FirstNameEnum
@@ -134,4 +134,5 @@ public enum FirstNameEnum
     Viivi,
     Vili,
     Viola,
+    _Count,
 }

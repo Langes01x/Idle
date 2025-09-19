@@ -1,4 +1,4 @@
-namespace IdleCore;
+namespace IdleCore.Model;
 
 public enum RarityEnum
 {

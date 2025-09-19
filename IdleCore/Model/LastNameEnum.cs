@@ -1,4 +1,4 @@
-namespace IdleCore;
+namespace IdleCore.Model;
 
 // Last names are based off of Dutch names
 public enum LastNameEnum
@@ -123,4 +123,5 @@ public enum LastNameEnum
     Tuur,
     Vera,
     Wim,
+    _Count,
 }

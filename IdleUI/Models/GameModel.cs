@@ -1,4 +1,4 @@
-using IdleCore;
+using IdleCore.Model;
 
 namespace IdleUI.Models;
 

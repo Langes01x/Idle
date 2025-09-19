@@ -1,3 +1,4 @@
+using IdleCore.Helpers;
 using IdleDB;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,8 @@ builder.Services.ConfigureApplicationCookie(o =>
 });
 
 builder.Services.AddScoped<IAccountManager, AccountManager>();
+builder.Services.AddScoped<ISummonHelper, SummonHelper>();
+builder.Services.AddScoped<Random>();
 
 var app = builder.Build();
 

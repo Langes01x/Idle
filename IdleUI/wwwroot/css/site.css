@@ -42,3 +42,61 @@ body {
   border-radius: .25rem;
   display: inline-block;
 }
+
+.modal-bg {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0, 40%);
+}
+
+.modal {
+  display: block;
+  position: relative;
+  background-color: black;
+  width: fit-content;
+  height: fit-content;
+  min-width: 450px;
+  max-width: 80%;
+  padding: .5rem;
+  margin: auto;
+  border-radius: .25rem;
+  box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 40%), 0 4px 8px 0 rgb(0, 0, 0, 40%);
+}
+
+.modal-header {
+  display: block;
+}
+
+.modal-close {
+  display: block;
+  color: white;
+  float: right;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  color: cyan;
+  cursor: pointer;
+}
+
+.form-inline {
+  display: inline;
+}
+
+.char-grid {
+  display: block;
+}
+
+.character {
+  width: 200px;
+  margin: 5px 3px;
+}

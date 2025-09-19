@@ -1,10 +1,10 @@
-namespace IdleCore;
+namespace IdleCore.Model;
 
 public class Character
 {
     public int Id { get; set; }
     public required string AccountId { get; set; }
-    public Account Account { get; set; } = null!;
+    public Account Account { get; set; } = default!;
 
     public int Level { get; set; }
     public RarityEnum Rarity { get; set; }

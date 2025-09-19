@@ -1,4 +1,4 @@
-﻿using IdleCore;
+﻿using IdleCore.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

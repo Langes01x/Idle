@@ -1,4 +1,4 @@
-namespace IdleCore;
+namespace IdleCore.Model;
 
 [Flags]
 public enum StatEnum
@@ -11,7 +11,7 @@ public enum StatEnum
     Constitution = 16,
     Wisdom = 32,
 
-    // Classes
+    // Classes (each having a damage stat and two secondary stats)
     Paladin = Intelligence | Constitution | Wisdom,
     Bulwark = Strength | Constitution | Wisdom,
     Runemaster = Intelligence | Constitution | Dexterity,

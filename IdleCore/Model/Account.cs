@@ -1,4 +1,4 @@
-﻿namespace IdleCore;
+﻿namespace IdleCore.Model;
 
 public class Account
 {
@@ -9,7 +9,7 @@ public class Account
     public long Diamonds { get; set; }
     public long LevelsCleared { get; set; }
 
-    public ICollection<Character> Characters { get; set; } = null!;
+    public ICollection<Character> Characters { get; } = default!;
 
     public long GetExperienceAccumulationRate()
     {
