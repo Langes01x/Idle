@@ -5,6 +5,12 @@ namespace IdleDB;
 
 public interface IAccountManager
 {
+    /// <summary>
+    /// Gets or creates an account for the user using their ID
+    /// </summary>
+    /// <param name="userId">The user's ID</param>
+    /// <param name="includeCharacters">Whether to include characters in the query</param>
+    /// <returns>The user's account</returns>
     Task<Account> GetOrCreateAccount(string userId, bool includeCharacters = false);
     Task SaveChanges();
 }
@@ -18,12 +24,6 @@ public class AccountManager : IAccountManager
         _context = context;
     }
 
-    /// <summary>
-    /// Gets or creates an account for the user using their ID
-    /// </summary>
-    /// <param name="userId">The user's ID</param>
-    /// <param name="includeCharacters">Whether to include characters in the query</param>
-    /// <returns>The user's account</returns>
     public async Task<Account> GetOrCreateAccount(string userId, bool includeCharacters = false)
     {
         IQueryable<Account> query = _context.Accounts;

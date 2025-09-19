@@ -4,8 +4,17 @@ namespace IdleCore.Helpers;
 
 public interface ISummonHelper
 {
+    /// <summary>
+    /// The cost to summon one character.
+    /// </summary>
     int SummonCost { get; }
 
+    /// <summary>
+    /// Summon a number of characters.
+    /// </summary>
+    /// <param name="account">Account to summon characters for.</param>
+    /// <param name="quantity">Quantity of characters to summon.</param>
+    /// <returns>The characters which were summoned.</returns>
     IEnumerable<Character> SummonCharacters(Account account, int quantity);
 }
 
@@ -26,17 +35,8 @@ public class SummonHelper : ISummonHelper
         _rng = rng;
     }
 
-    /// <summary>
-    /// The cost to summon one character.
-    /// </summary>
     public int SummonCost => 3600;
 
-    /// <summary>
-    /// Summon
-    /// </summary>
-    /// <param name="accountId"></param>
-    /// <param name="quantity"></param>
-    /// <returns></returns>
     public IEnumerable<Character> SummonCharacters(Account account, int quantity)
     {
         while (quantity > 0)
