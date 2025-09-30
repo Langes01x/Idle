@@ -1,11 +1,11 @@
-import './App.css'
+import './Layout.scss'
 import Nav from './Nav/Nav'
-import LoginPage from './Account/LoginPage';
 import AccountContext, { type Account } from './Account/AccountContext';
 import { useEffect, useState } from 'react';
 import FetchAccount from './Account/FetchAccount';
+import { Outlet } from 'react-router';
 
-function App() {
+function Layout() {
   const [account, setAccount] = useState<Account | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,11 +35,11 @@ function App() {
       </header>
       <div className="container">
         <main role="main">
-          <LoginPage />
+          <Outlet />
         </main>
       </div>
     </AccountContext>
   );
 };
 
-export default App;
+export default Layout;
