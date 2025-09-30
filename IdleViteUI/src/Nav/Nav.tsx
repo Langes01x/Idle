@@ -1,10 +1,11 @@
 import './Nav.css'
 import { useContext } from 'react';
 import AccountContext from '../Account/AccountContext';
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 
 function Nav() {
     const { account, setAccount } = useContext(AccountContext);
+    const navigate = useNavigate();
 
     async function handleLogout() {
         try {
@@ -17,6 +18,7 @@ function Nav() {
             });
             if (response.ok) {
                 setAccount(null);
+                navigate("/login");
             }
         } catch {
             // Do nothing on logout failure
