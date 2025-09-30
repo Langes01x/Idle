@@ -1,15 +1,16 @@
-import { useActionState, useContext, useState } from "react"
-import AccountContext from "./AccountContext";
-import FetchAccount from "./FetchAccount";
+import { useActionState, useState, type JSX } from "react";
+import { useNavigate } from "react-router";
 
-function LoginPage() {
+function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirm, setConfirm] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const { setAccount } = useContext(AccountContext);
+    const [confirmError, setConfirmError] = useState('');
+    const navigate = useNavigate();
 
-    const [modelError, handleLogin, isPending] = useActionState<string | null | undefined, FormData>(
+    const [modelError, handleRegister, isPending] = useActionState<JSX.Element | null | undefined, FormData>(
         async (_previousState, formData) => {
             if (!email) {
                 setEmailError("Email is required");
@@ -21,12 +22,17 @@ function LoginPage() {
             } else {
                 setPasswordError("");
             }
-            if (!email || !password) {
+            if (password !== confirm) {
+                setConfirmError("Password and confirmation don't match");
+            } else {
+                setConfirmError("");
+            }
+            if (!email || !password || password !== confirm) {
                 return null;
             }
 
             try {
-                const response = await fetch("/api/login?useCookies=true", {
+                const response = await fetch("/api/register", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -36,13 +42,16 @@ function LoginPage() {
                 });
                 if (!response.ok) {
                     const json = await response.json();
-                    return json.message || response.statusText;
+                    if ('errors' in json) {
+                        return (<>{Object.values<string>(json.errors).map((val: string) => { return (<p>{val}</p>); })}</>);
+                    }
+                    return (<p>{response.statusText}</p>);
                 }
-                setAccount(await FetchAccount());
+                navigate("/login");
                 return null;
             } catch (error) {
                 if (error instanceof Error) {
-                    return error.message;
+                    return (<p>{error.message}</p>);
                 }
             }
         },
@@ -51,12 +60,12 @@ function LoginPage() {
 
     return (
         <>
-            <h1>Log in</h1>
+            <h1>Register</h1>
             <hr />
             <div className="row">
                 <div className="col-md-6">
                     <section>
-                        <form action={handleLogin}>
+                        <form action={handleRegister}>
                             {modelError && <div className="text-danger" role="alert">{modelError}</div>}
                             <div className="form-floating mb-3">
                                 <input id="email" name="email" type="text" className="form-control" autoComplete="username"
@@ -66,25 +75,21 @@ function LoginPage() {
                                 {emailError && <span className="text-danger">{emailError}</span>}
                             </div>
                             <div className="form-floating mb-3">
-                                <input id="password" name="password" type="password" className="form-control" autoComplete="current-password"
+                                <input id="password" name="password" type="password" className="form-control" autoComplete="new-password"
                                     aria-required="true" placeholder="password" value={password}
                                     onChange={(e) => setPassword(e.target.value)} />
                                 <label htmlFor="password" className="form-label">Password</label>
                                 {passwordError && <span className="text-danger">{passwordError}</span>}
                             </div>
-                            <div>
-                                <button type="submit" className="w-100 btn btn-lg btn-primary" disabled={isPending}>Log in</button>
+                            <div className="form-floating mb-3">
+                                <input id="confirm" name="confirm" type="password" className="form-control" autoComplete="new-password"
+                                    aria-required="true" placeholder="password" value={confirm}
+                                    onChange={(e) => setConfirm(e.target.value)} />
+                                <label htmlFor="confirm" className="form-label">Confirm Password</label>
+                                {confirmError && <span className="text-danger">{confirmError}</span>}
                             </div>
                             <div>
-                                <p>
-                                    <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                                </p>
-                                <p>
-                                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                                </p>
-                                <p>
-                                    <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                                </p>
+                                <button type="submit" className="w-100 btn btn-lg btn-primary" disabled={isPending}>Register</button>
                             </div>
                         </form>
                     </section>
@@ -94,4 +99,4 @@ function LoginPage() {
     );
 };
 
-export default LoginPage;
+export default Register;

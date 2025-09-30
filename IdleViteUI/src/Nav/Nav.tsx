@@ -1,6 +1,7 @@
 import './Nav.css'
 import { useContext } from 'react';
 import AccountContext from '../Account/AccountContext';
+import { NavLink } from 'react-router';
 
 function Nav() {
     const { account, setAccount } = useContext(AccountContext);
@@ -55,10 +56,10 @@ function Nav() {
                                 </> :
                                 <>
                                     <li className="nav-item">
-                                        <a className="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                        <NavLink className="nav-link" to="/register">Register</NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                        <NavLink className="nav-link" to="/login">Login</NavLink>
                                     </li>
                                 </>
                         }
