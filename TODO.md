@@ -1,6 +1,17 @@
 # Ideas:
-- 
-- 
+- Character details
+  - Computed stats
+  - Dismissal - Returns exp and some amount of diamonds
+    - Instead of diamonds give shards to increase character rarity?
+  - Character leveling
+- Sort character list (level, rarity)
+- Party - 3 characters
+- Account leveling
+- Cap idle gains to 24 hours?
+- Equipment shop
+  - Refresh daily
+  - Generate shop items from a stored seed
+  - 
 
 
 # Currency types:
