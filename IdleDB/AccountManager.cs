@@ -31,7 +31,7 @@ public class AccountManager : IAccountManager
         {
             query = query.Include(q => q.Characters);
         }
-        var account = await query.Where(q => q.Id == userId).SingleAsync();
+        var account = await query.Where(q => q.Id == userId).SingleOrDefaultAsync();
         if (account is null)
         {
             account = new Account { Id = userId, LastIdleCollection = DateTime.UtcNow };
