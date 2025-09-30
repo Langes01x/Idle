@@ -82,7 +82,7 @@ function Login() {
                             </div>
                             <div>
                                 <p>
-                                    <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                                    <Link to="/forgotPassword">Forgot your password?</Link>
                                 </p>
                                 <p>
                                     <Link to="/register">Register as a new user</Link>
