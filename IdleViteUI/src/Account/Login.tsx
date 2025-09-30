@@ -88,7 +88,7 @@ function Login() {
                                     <Link to="/register">Register as a new user</Link>
                                 </p>
                                 <p>
-                                    <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                                    <Link to="/resendConfirmationEmail">Resend confirmation email</Link>
                                 </p>
                             </div>
                         </form>

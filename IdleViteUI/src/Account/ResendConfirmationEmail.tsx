@@ -1,7 +1,7 @@
 import { useActionState, useState, type JSX } from "react";
 import { useNavigate } from "react-router";
 
-function ForgotPassword() {
+function ResendConfirmationEmail() {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ function ForgotPassword() {
             setEmailError("");
 
             try {
-                const response = await fetch("/api/forgotPassword", {
+                const response = await fetch("/api/resendConfirmationEmail", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -43,7 +43,7 @@ function ForgotPassword() {
 
     return (
         <>
-            <h1>Reset password</h1>
+            <h1>Resend confirmation email</h1>
             <hr />
             <div className="row">
                 <div className="col-md-6">
@@ -58,7 +58,7 @@ function ForgotPassword() {
                                 {emailError && <span className="text-danger">{emailError}</span>}
                             </div>
                             <div>
-                                <button type="submit" className="w-100 btn btn-lg btn-primary" disabled={isPending}>Reset password</button>
+                                <button type="submit" className="w-100 btn btn-lg btn-primary" disabled={isPending}>Resend confirmation email</button>
                             </div>
                         </form>
                     </section>
@@ -68,4 +68,4 @@ function ForgotPassword() {
     );
 };
 
-export default ForgotPassword;
+export default ResendConfirmationEmail;
