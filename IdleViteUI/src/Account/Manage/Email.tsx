@@ -1,8 +1,6 @@
 import { useLoaderData } from "react-router";
 import FetchAccountInfo from "./FetchAccountInfo";
-import { useActionState, useContext, useState, type JSX } from "react";
-import AccountContext from "../AccountContext";
-import FetchAccount from "../FetchAccount";
+import { useActionState, useState, type JSX } from "react";
 
 export async function EmailLoader() {
     return {
@@ -14,7 +12,6 @@ function Email() {
     const { accountInfo } = useLoaderData();
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
-    const { setAccount } = useContext(AccountContext);
 
     const [emailModelError, handleChangeEmail, isEmailPending] = useActionState<JSX.Element | null | undefined, FormData>(
         async (_previousState, formData) => {
@@ -40,9 +37,7 @@ function Email() {
                     }
                     return (<p>{response.statusText}</p>);
                 }
-                // TODO: This API call seems to be broken as it doesn't update the email
-                setAccount(await FetchAccount());
-                return null;
+                return (<p className="text-success">Check email to complete verification</p>);
             } catch (error) {
                 if (error instanceof Error) {
                     return (<p>{error.message}</p>);
