@@ -4,6 +4,8 @@ import Login from "./Account/Login";
 import Register from "./Account/Register";
 import ForgotPassword from "./Account/ForgotPassword";
 import ResendConfirmationEmail from "./Account/ResendConfirmationEmail";
+import ManageLayout from "./Account/Manage/ManageLayout";
+import Profile from "./Account/Manage/Profile";
 
 const Router = createBrowserRouter([
     {
@@ -15,6 +17,13 @@ const Router = createBrowserRouter([
             { path: "login", Component: Login },
             { path: "forgotPassword", Component: ForgotPassword },
             { path: "resendConfirmationEmail", Component: ResendConfirmationEmail },
+            {
+                path: "manage",
+                Component: ManageLayout,
+                children: [
+                    { index: true, Component: Profile },
+                ],
+            },
         ],
     },
 ]);

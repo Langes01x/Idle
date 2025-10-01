@@ -1,0 +1,29 @@
+import { NavLink } from "react-router";
+
+function ManageNav() {
+    return (
+        <ul className="nav nav-pills flex-column">
+            <li className="nav-item">
+                <NavLink className="nav-link" to="/manage">Profile</NavLink>
+            </li>
+            <li className="nav-item">
+                <a className="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email"
+                    asp-page="./Email">Email</a>
+            </li>
+            <li className="nav-item">
+                <a className="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password"
+                    asp-page="./ChangePassword">Password</a>
+            </li>
+            <li className="nav-item">
+                <a className="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"
+                    id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a>
+            </li>
+            <li className="nav-item">
+                <a className="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data"
+                    asp-page="./PersonalData">Personal data</a>
+            </li>
+        </ul>
+    );
+};
+
+export default ManageNav;

@@ -47,8 +47,7 @@ function Nav() {
                             account ?
                                 <>
                                     <li className="nav-item">
-                                        <a className="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index"
-                                            title="Manage">{account.email}</a>
+                                        <NavLink className="nav-link" to="/manage">{account.email}</NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <form className="form-inline" action={handleLogout}>
