@@ -1,10 +1,8 @@
 import { useActionState, useState, type JSX } from "react";
-import { useNavigate } from "react-router";
 
 function ResendConfirmationEmail() {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
-    const navigate = useNavigate();
 
     const [modelError, handleReset, isPending] = useActionState<JSX.Element | null | undefined, FormData>(
         async (_previousState, formData) => {
@@ -30,8 +28,7 @@ function ResendConfirmationEmail() {
                     }
                     return (<p>{response.statusText}</p>);
                 }
-                navigate("/login");
-                return null;
+                return (<p className="text-success">Check email to complete verification</p>);
             } catch (error) {
                 if (error instanceof Error) {
                     return (<p>{error.message}</p>);

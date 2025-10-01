@@ -4,11 +4,10 @@ function ManageNav() {
     return (
         <ul className="nav nav-pills flex-column">
             <li className="nav-item">
-                <NavLink className="nav-link" to="/manage">Profile</NavLink>
+                <NavLink className="nav-link" to="/manage/profile">Profile</NavLink>
             </li>
             <li className="nav-item">
-                <a className="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email"
-                    asp-page="./Email">Email</a>
+                <NavLink className="nav-link" to="/manage/email">Email</NavLink>
             </li>
             <li className="nav-item">
                 <a className="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password"
