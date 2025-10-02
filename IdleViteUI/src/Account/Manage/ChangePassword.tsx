@@ -45,7 +45,7 @@ function ChangePassword() {
                     }
                     return (<p>{response.statusText}</p>);
                 }
-                return null;
+                return (<p className="text-success">Password changed</p>);
             } catch (error) {
                 if (error instanceof Error) {
                     return (<p>{error.message}</p>);
