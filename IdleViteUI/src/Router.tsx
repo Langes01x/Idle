@@ -7,6 +7,7 @@ import ResendConfirmationEmail from "./Account/ResendConfirmationEmail";
 import ManageLayout from "./Account/Manage/ManageLayout";
 import Profile from "./Account/Manage/Profile";
 import Email, { EmailLoader } from "./Account/Manage/Email";
+import ChangePassword from "./Account/Manage/ChangePassword";
 
 const Router = createBrowserRouter([
     {
@@ -24,6 +25,7 @@ const Router = createBrowserRouter([
                 children: [
                     { path: "profile", Component: Profile },
                     { path: "email", Component: Email, loader: EmailLoader },
+                    { path: "changePassword", Component: ChangePassword },
                 ],
             },
         ],
