@@ -8,6 +8,7 @@ import ManageLayout from "./Account/Manage/ManageLayout";
 import Profile from "./Account/Manage/Profile";
 import Email, { EmailLoader } from "./Account/Manage/Email";
 import ChangePassword from "./Account/Manage/ChangePassword";
+import ProfileRedirect from "./Account/Manage/ProfileRedirect";
 
 const Router = createBrowserRouter([
     {
@@ -23,6 +24,7 @@ const Router = createBrowserRouter([
                 path: "manage",
                 Component: ManageLayout,
                 children: [
+                    { index: true, loader: ProfileRedirect },
                     { path: "profile", Component: Profile },
                     { path: "email", Component: Email, loader: EmailLoader },
                     { path: "changePassword", Component: ChangePassword },
