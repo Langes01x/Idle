@@ -1,5 +1,7 @@
+using IdleAPI.Converters;
 using IdleCore.Helpers;
 using IdleDB;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +24,14 @@ builder.Services.Configure<IdentityOptions>(o =>
     o.User.RequireUniqueEmail = true;
 
     o.SignIn.RequireConfirmedAccount = false;
+    o.Tokens.AuthenticatorIssuer = "IdleAPI";
+});
+
+// Fix JSON body conversion of true / false string values to booleans
+builder.Services.Configure<JsonOptions>(o =>
+{
+    o.SerializerOptions.Converters.Add(new BooleanConverter());
+    o.SerializerOptions.Converters.Add(new NullableBooleanConverter());
 });
 
 builder.Services.AddControllers();

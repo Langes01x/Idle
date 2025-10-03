@@ -8,7 +8,14 @@ import ManageLayout from "./Account/Manage/ManageLayout";
 import Profile from "./Account/Manage/Profile";
 import Email, { EmailLoader } from "./Account/Manage/Email";
 import ChangePassword from "./Account/Manage/ChangePassword";
+import TwoFactorAuthentication, { TwoFactorLoader } from "./Account/Manage/TwoFactor/TwoFactorAuthentication";
+import EnableAuthenticator from "./Account/Manage/TwoFactor/EnableAuthenticator";
+import ResetAuthenticator from "./Account/Manage/TwoFactor/ResetAuthenticator";
+import GenerateRecoveryCodes from "./Account/Manage/TwoFactor/GenerateRecoveryCodes";
 import ProfileRedirect from "./Account/Manage/ProfileRedirect";
+import RecoveryCodes from "./Account/Manage/TwoFactor/RecoveryCodes";
+import LoginTwoFactor from "./Account/LoginTwoFactor";
+import LoginRecovery from "./Account/LoginRecovery";
 
 const Router = createBrowserRouter([
     {
@@ -18,6 +25,8 @@ const Router = createBrowserRouter([
             { index: true, Component: Login },
             { path: "register", Component: Register },
             { path: "login", Component: Login },
+            { path: "loginTwoFactor", Component: LoginTwoFactor },
+            { path: "loginRecovery", Component: LoginRecovery },
             { path: "forgotPassword", Component: ForgotPassword },
             { path: "resendConfirmationEmail", Component: ResendConfirmationEmail },
             {
@@ -28,6 +37,16 @@ const Router = createBrowserRouter([
                     { path: "profile", Component: Profile },
                     { path: "email", Component: Email, loader: EmailLoader },
                     { path: "changePassword", Component: ChangePassword },
+                    {
+                        path: "twoFactorAuthentication",
+                        children: [
+                            { index: true, Component: TwoFactorAuthentication, loader: TwoFactorLoader },
+                            { path: "enableAuthenticator", Component: EnableAuthenticator, loader: TwoFactorLoader },
+                            { path: "resetAuthenticator", Component: ResetAuthenticator },
+                            { path: "generateRecoveryCodes", Component: GenerateRecoveryCodes },
+                            { path: "recoveryCodes", Component: RecoveryCodes },
+                        ],
+                    },
                 ],
             },
         ],

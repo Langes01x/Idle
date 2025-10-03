@@ -13,8 +13,7 @@ function ManageNav() {
                 <NavLink className="nav-link" to="/manage/changePassword">Password</NavLink>
             </li>
             <li className="nav-item">
-                <a className="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"
-                    id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a>
+                <NavLink className="nav-link" to="/manage/twoFactorAuthentication">Two-factor authentication</NavLink>
             </li>
             <li className="nav-item">
                 <a className="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data"

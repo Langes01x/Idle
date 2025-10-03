@@ -1,9 +1,11 @@
 import { useActionState, useContext, useState, type JSX } from "react"
 import AccountContext from "./AccountContext";
 import FetchAccount from "./FetchAccount";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import type { LoginTwoFactorState } from "./LoginTwoFactor";
 
 function Login() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -39,6 +41,13 @@ function Login() {
                     const json = await response.json();
                     if ('errors' in json) {
                         return (<>{Object.values<string>(json.errors).map((val: string) => { return (<p>{val}</p>); })}</>);
+                    }
+                    if ('detail' in json && json.detail == "RequiresTwoFactor") {
+                        const state: LoginTwoFactorState = {
+                            email: formData.get("email")?.toString() || "",
+                            password: formData.get("password")?.toString() || "",
+                        };
+                        navigate("/LoginTwoFactor", { state: state });
                     }
                     return (<p>{response.statusText}</p>);
                 }
