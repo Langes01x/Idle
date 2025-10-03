@@ -1,7 +1,16 @@
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import ManageNav from "./ManageNav";
+import { useContext } from "react";
+import AccountContext from "../AccountContext";
 
 function ManageLayout() {
+    const { account } = useContext(AccountContext);
+    const navigate = useNavigate();
+
+    if (account === null) {
+        navigate("/login");
+    }
+
     return (
         <>
             <h1>Manage account</h1>
