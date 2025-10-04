@@ -1,0 +1,13 @@
+.info-grid {
+    display: inline-grid;
+    text-align: left;
+    grid-template-columns: 60% 40%;
+    width: 200px;
+}
+
+.rounded-box {
+    background-color: darkblue;
+    padding: .5rem;
+    border-radius: .25rem;
+    display: inline-block;
+}

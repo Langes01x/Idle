@@ -1,7 +1,7 @@
 import { useActionState, useContext, useState, type JSX } from "react";
 import AccountContext from "./AccountContext";
 import FetchAccount from "./FetchAccount";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 
 export type LoginTwoFactorState = {
     email: string,
@@ -10,6 +10,7 @@ export type LoginTwoFactorState = {
 
 function LoginTwoFactor() {
     const location = useLocation();
+    const navigate = useNavigate();
     const state = location.state as LoginTwoFactorState;
     const [twoFactorCode, setTwoFactorCode] = useState('');
     const [twoFactorCodeError, setTwoFactorCodeError] = useState('');
@@ -40,7 +41,7 @@ function LoginTwoFactor() {
                     return (<p>{response.statusText}</p>);
                 }
                 setAccount(await FetchAccount());
-                // TODO: Redirect to game page
+                navigate("/game");
                 return null;
             } catch (error) {
                 if (error instanceof Error) {

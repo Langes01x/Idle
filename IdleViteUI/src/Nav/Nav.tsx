@@ -38,7 +38,7 @@ function Nav() {
                         {
                             account &&
                             <li className="nav-item">
-                                <a className="nav-link" asp-area="" asp-controller="Game" asp-action="Index">Game</a>
+                                <NavLink className="nav-link" to="/game">Game</NavLink>
                             </li>
                         }
                     </ul>

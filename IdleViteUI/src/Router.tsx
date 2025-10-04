@@ -16,6 +16,8 @@ import ProfileRedirect from "./Account/Manage/ProfileRedirect";
 import RecoveryCodes from "./Account/Manage/TwoFactor/RecoveryCodes";
 import LoginTwoFactor from "./Account/LoginTwoFactor";
 import LoginRecovery from "./Account/LoginRecovery";
+import GameLayout from "./Game/GameLayout";
+import Game from "./Game/Game";
 
 const Router = createBrowserRouter([
     {
@@ -47,6 +49,13 @@ const Router = createBrowserRouter([
                             { path: "recoveryCodes", Component: RecoveryCodes },
                         ],
                     },
+                ],
+            },
+            {
+                path: "game",
+                Component: GameLayout,
+                children: [
+                    { index: true, Component: Game },
                 ],
             },
         ],

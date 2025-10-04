@@ -1,11 +1,12 @@
 import { useActionState, useContext, useState, type JSX } from "react";
 import AccountContext from "./AccountContext";
 import FetchAccount from "./FetchAccount";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import type { LoginTwoFactorState } from "./LoginTwoFactor";
 
 function LoginRecovery() {
     const location = useLocation();
+    const navigate = useNavigate();
     const state = location.state as LoginTwoFactorState;
     const [recoveryCode, setRecoveryCode] = useState('');
     const [recoveryCodeError, setRecoveryCodeError] = useState('');
@@ -36,7 +37,7 @@ function LoginRecovery() {
                     return (<p>{response.statusText}</p>);
                 }
                 setAccount(await FetchAccount());
-                // TODO: Redirect to game page
+                navigate("/game");
                 return null;
             } catch (error) {
                 if (error instanceof Error) {

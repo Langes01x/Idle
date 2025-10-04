@@ -10,7 +10,12 @@ function Login() {
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const { setAccount } = useContext(AccountContext);
+    const { account, setAccount } = useContext(AccountContext);
+
+    // If we have account info there's no need to log in
+    if (account !== null) {
+        navigate("/game");
+    }
 
     const [modelError, handleLogin, isPending] = useActionState<JSX.Element | null | undefined, FormData>(
         async (_previousState, formData) => {
@@ -52,7 +57,7 @@ function Login() {
                     return (<p>{response.statusText}</p>);
                 }
                 setAccount(await FetchAccount());
-                // TODO: Redirect to game page
+                navigate("/game");
                 return null;
             } catch (error) {
                 if (error instanceof Error) {
