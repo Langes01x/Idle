@@ -1,4 +1,5 @@
 ﻿using IdleCore.Model;
+using IdleDB.Converters;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -31,5 +32,13 @@ public class ApplicationDbContext : IdentityDbContext
             b.HasKey(c => c.Id);
             b.HasOne(c => c.Account).WithMany(a => a.Characters).HasPrincipalKey(a => a.Id).HasForeignKey(c => c.AccountId).IsRequired();
         });
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        base.ConfigureConventions(configurationBuilder);
+
+        configurationBuilder.Properties<DateTime>().HaveConversion<DateTimeValueConverter>();
+        configurationBuilder.Properties<DateTime?>().HaveConversion<NullableDateTimeValueConverter>();
     }
 }
