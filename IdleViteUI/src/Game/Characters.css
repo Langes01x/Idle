@@ -1,0 +1,8 @@
+.char-grid {
+    display: block;
+}
+
+.character {
+    width: 200px;
+    margin: 5px 3px;
+}

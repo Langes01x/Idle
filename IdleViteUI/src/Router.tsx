@@ -20,6 +20,8 @@ import GameLayout from "./Game/GameLayout";
 import Game from "./Game/Game";
 import FetchAccountInfo from "./Account/Manage/FetchAccountInfo";
 import Fetch2faInfo from "./Account/Manage/TwoFactor/Fetch2faInfo";
+import Characters from "./Game/Characters";
+import FetchCharacters from "./Game/FetchCharacters";
 
 const Router = createBrowserRouter([
     {
@@ -58,6 +60,7 @@ const Router = createBrowserRouter([
                 Component: GameLayout,
                 children: [
                     { index: true, Component: Game },
+                    { path: "characters", Component: Characters, loader: FetchCharacters },
                 ],
             },
         ],

@@ -1,8 +1,12 @@
 .info-grid {
     display: inline-grid;
     text-align: left;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: auto 70%;
     width: 200px;
+}
+
+.info-grid label {
+    margin-right: 5px;
 }
 
 .rounded-box {

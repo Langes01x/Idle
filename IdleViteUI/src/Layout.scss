@@ -66,6 +66,17 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.modal-dialog {
+  width: fit-content;
+  min-width: 450px;
+  max-width: 80%;
+}
+
+.modal-content {
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+}
+
 @media (prefers-color-scheme: light) {
   body {
     color: #213547;
@@ -78,5 +89,10 @@ button:focus-visible {
 
   button {
     background-color: #f9f9f9;
+  }
+
+  .modal-content {
+    color: #213547;
+    background-color: #ffffff;
   }
 }

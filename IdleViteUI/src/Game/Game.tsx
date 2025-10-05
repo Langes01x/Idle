@@ -75,7 +75,7 @@ function Game() {
                 </div>
             </div>
             <div>
-                <Link to="/Game/Characters" className="btn btn-primary">Characters</Link>
+                <Link to="/game/characters" className="btn btn-primary">Characters</Link>
             </div>
         </div>
     );
