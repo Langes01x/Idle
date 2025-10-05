@@ -11,11 +11,15 @@ Requirements:
 - Visual Studio / VSCode
 - .Net 8.0
 - .Net EF tool - Can be installed using `dotnet tool install --global dotnet-ef`
+- Node.js 22.20
 
 Running:
 1. Open solution file.
 2. Create the database using `dotnet ef database update --project IdleDB --startup-project IdleUI`
-3. Run IdleUI project.
+3. Run IdleAPI project.
+4. Open terminal in IdleViteUI folder.
+5. Restore dependencies using `npm install`
+6. Run react UI using `npx vite --port=4000`
 
 Schema Changes:
 1. Make changes to the schema objects in IdleCore
