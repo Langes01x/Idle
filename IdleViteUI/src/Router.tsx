@@ -6,9 +6,9 @@ import ForgotPassword from "./Account/ForgotPassword";
 import ResendConfirmationEmail from "./Account/ResendConfirmationEmail";
 import ManageLayout from "./Account/Manage/ManageLayout";
 import Profile from "./Account/Manage/Profile";
-import Email, { EmailLoader } from "./Account/Manage/Email";
+import Email from "./Account/Manage/Email";
 import ChangePassword from "./Account/Manage/ChangePassword";
-import TwoFactorAuthentication, { TwoFactorLoader } from "./Account/Manage/TwoFactor/TwoFactorAuthentication";
+import TwoFactorAuthentication from "./Account/Manage/TwoFactor/TwoFactorAuthentication";
 import EnableAuthenticator from "./Account/Manage/TwoFactor/EnableAuthenticator";
 import ResetAuthenticator from "./Account/Manage/TwoFactor/ResetAuthenticator";
 import GenerateRecoveryCodes from "./Account/Manage/TwoFactor/GenerateRecoveryCodes";
@@ -18,6 +18,8 @@ import LoginTwoFactor from "./Account/LoginTwoFactor";
 import LoginRecovery from "./Account/LoginRecovery";
 import GameLayout from "./Game/GameLayout";
 import Game from "./Game/Game";
+import FetchAccountInfo from "./Account/Manage/FetchAccountInfo";
+import Fetch2faInfo from "./Account/Manage/TwoFactor/Fetch2faInfo";
 
 const Router = createBrowserRouter([
     {
@@ -37,13 +39,13 @@ const Router = createBrowserRouter([
                 children: [
                     { index: true, loader: ProfileRedirect },
                     { path: "profile", Component: Profile },
-                    { path: "email", Component: Email, loader: EmailLoader },
+                    { path: "email", Component: Email, loader: FetchAccountInfo },
                     { path: "changePassword", Component: ChangePassword },
                     {
                         path: "twoFactorAuthentication",
                         children: [
-                            { index: true, Component: TwoFactorAuthentication, loader: TwoFactorLoader },
-                            { path: "enableAuthenticator", Component: EnableAuthenticator, loader: TwoFactorLoader },
+                            { index: true, Component: TwoFactorAuthentication, loader: Fetch2faInfo },
+                            { path: "enableAuthenticator", Component: EnableAuthenticator, loader: Fetch2faInfo },
                             { path: "resetAuthenticator", Component: ResetAuthenticator },
                             { path: "generateRecoveryCodes", Component: GenerateRecoveryCodes },
                             { path: "recoveryCodes", Component: RecoveryCodes },

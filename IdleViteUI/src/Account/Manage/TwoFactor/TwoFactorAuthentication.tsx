@@ -1,15 +1,9 @@
 import { Link, useLoaderData, useLocation, useNavigate } from "react-router";
-import Fetch2faInfo, { type TwoFactorInfo } from "./Fetch2faInfo";
+import { type TwoFactorInfo } from "./Fetch2faInfo";
 import { useActionState, type JSX } from "react";
 
 export type TwoFactorAuthenticationState = {
     message: string,
-};
-
-export async function TwoFactorLoader() {
-    return {
-        twoFactorInfo: await Fetch2faInfo()
-    };
 };
 
 function RecoveryCodes(twoFactorInfo: TwoFactorInfo) {
@@ -39,7 +33,7 @@ function RecoveryCodes(twoFactorInfo: TwoFactorInfo) {
 };
 
 function TwoFactorAuthentication() {
-    const { twoFactorInfo } = useLoaderData();
+    const twoFactorInfo = useLoaderData<TwoFactorInfo>();
     const navigate = useNavigate();
     const location = useLocation();
     const state = location.state as TwoFactorAuthenticationState | undefined;

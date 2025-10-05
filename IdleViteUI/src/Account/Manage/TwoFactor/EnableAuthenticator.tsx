@@ -17,7 +17,7 @@ function FormatKey(key: string) {
 };
 
 function EnableAuthenticator() {
-    const { twoFactorInfo } = useLoaderData();
+    const twoFactorInfo = useLoaderData<TwoFactorInfo>();
     const navigate = useNavigate();
     const { account } = useContext(AccountContext);
     const [twoFactorCode, setTwoFactorCode] = useState('');

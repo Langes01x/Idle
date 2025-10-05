@@ -1,15 +1,9 @@
 import { useLoaderData } from "react-router";
-import FetchAccountInfo from "./FetchAccountInfo";
+import { type AccountInfo } from "./FetchAccountInfo";
 import { useActionState, useState, type JSX } from "react";
 
-export async function EmailLoader() {
-    return {
-        accountInfo: await FetchAccountInfo()
-    };
-};
-
 function Email() {
-    const { accountInfo } = useLoaderData();
+    const accountInfo = useLoaderData<AccountInfo>();
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
 
