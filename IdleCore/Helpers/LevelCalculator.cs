@@ -54,11 +54,13 @@ public class LevelCalculator : ILevelCalculator
 
     public int GetLevel(Character character)
     {
-        return _levelExperienceMap.First(m => m.experience > character.Experience).level - 1;
+        var (level, experience) = _levelExperienceMap.FirstOrDefault(m => m.experience > character.Experience);
+        return level == default ? 200 : level - 1;
     }
 
     public long GetExperienceToNextLevel(Character character)
     {
-        return _levelExperienceMap.First(m => m.experience > character.Experience).experience - character.Experience;
+        var (level, experience) = _levelExperienceMap.First(m => m.experience > character.Experience);
+        return experience == default ? long.MaxValue : experience - character.Experience;
     }
 }
