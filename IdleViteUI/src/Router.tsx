@@ -22,6 +22,7 @@ import FetchAccountInfo from "./Account/Manage/FetchAccountInfo";
 import Fetch2faInfo from "./Account/Manage/TwoFactor/Fetch2faInfo";
 import Characters from "./Game/Characters";
 import FetchCharacters from "./Game/FetchCharacters";
+import PersonalData from "./Account/Manage/PersonalData";
 
 const Router = createBrowserRouter([
     {
@@ -53,6 +54,7 @@ const Router = createBrowserRouter([
                             { path: "recoveryCodes", Component: RecoveryCodes },
                         ],
                     },
+                    { path: "personalData", Component: PersonalData },
                 ],
             },
             {
