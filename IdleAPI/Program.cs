@@ -41,6 +41,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAccountManager, AccountManager>();
 builder.Services.AddScoped<ISummonHelper, SummonHelper>();
+builder.Services.AddScoped<ILevelCalculator, LevelCalculator>();
+builder.Services.AddScoped<IStatCalculator, StatCalculator>();
+builder.Services.AddScoped<ICollectionHelper, CollectionHelper>();
 builder.Services.AddScoped<Random>();
 
 var app = builder.Build();

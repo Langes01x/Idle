@@ -25,4 +25,5 @@ Schema Changes:
 1. Make changes to the schema objects in IdleCore
 2. Add DbSet properties for any new schema objects to ApplicationDbContext in IdleDB
 3. Add configuration for any primary keys, foreign keys, etc. to OnModelCreating
+4. Create a migration using `dotnet ef migrations add <MigrationName> --project IdleDB --startup-project IdleAPI`
 4. Update the database using `dotnet ef database update --project IdleDB --startup-project IdleAPI`

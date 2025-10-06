@@ -1,10 +1,11 @@
+using IdleCore.Helpers;
 using IdleCore.Model;
 
 namespace IdleAPI.Models;
 
 public class AccountModel
 {
-    public AccountModel(Account account, string email)
+    public AccountModel(Account account, string email, ICollectionHelper collectionHelper)
     {
         Id = account.Id;
         Email = email;
@@ -15,9 +16,9 @@ public class AccountModel
         Gold = account.Gold;
         Diamonds = account.Diamonds;
 
-        ExperienceAccumulationRate = account.GetExperienceAccumulationRate();
-        GoldAccumulationRate = account.GetGoldAccumulationRate();
-        DiamondAccumulationRate = account.GetDiamondAccumulationRate();
+        ExperienceAccumulationRate = collectionHelper.GetExperienceAccumulationRate(account);
+        GoldAccumulationRate = collectionHelper.GetGoldAccumulationRate(account);
+        DiamondAccumulationRate = collectionHelper.GetDiamondAccumulationRate(account);
     }
 
     public string Id { get; set; }

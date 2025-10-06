@@ -1,4 +1,5 @@
 using IdleAPI.Models;
+using IdleCore.Helpers;
 using IdleDB;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,11 +14,14 @@ namespace IdleAPI.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IAccountManager _accountManager;
+        private readonly ICollectionHelper _collectionHelper;
 
-        public AccountController(UserManager<IdentityUser> userManager, IAccountManager accountManager)
+        public AccountController(UserManager<IdentityUser> userManager, IAccountManager accountManager,
+            ICollectionHelper collectionHelper)
         {
             _userManager = userManager;
             _accountManager = accountManager;
+            _collectionHelper = collectionHelper;
         }
 
         // Get account info.
@@ -33,7 +37,7 @@ namespace IdleAPI.Controllers
 
             var account = await _accountManager.GetOrCreateAccount(userId);
 
-            return new AccountModel(account, _userManager.GetUserName(User)!);
+            return new AccountModel(account, _userManager.GetUserName(User)!, _collectionHelper);
         }
 
         // Collect idle rewards.
@@ -48,10 +52,10 @@ namespace IdleAPI.Controllers
             }
 
             var account = await _accountManager.GetOrCreateAccount(userId);
-            account.CollectIdleRewards();
+            _collectionHelper.CollectIdleRewards(account);
             await _accountManager.SaveChanges();
 
-            return new AccountModel(account, _userManager.GetUserName(User)!);
+            return new AccountModel(account, _userManager.GetUserName(User)!, _collectionHelper);
         }
     }
 }

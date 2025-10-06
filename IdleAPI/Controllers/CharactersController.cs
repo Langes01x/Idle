@@ -15,12 +15,17 @@ namespace IdleAPI.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IAccountManager _accountManager;
         private readonly ISummonHelper _summonHelper;
+        private readonly ILevelCalculator _levelCalculator;
+        private readonly IStatCalculator _statCalculator;
 
-        public CharactersController(UserManager<IdentityUser> userManager, IAccountManager accountManager, ISummonHelper summonHelper)
+        public CharactersController(UserManager<IdentityUser> userManager, IAccountManager accountManager,
+            ISummonHelper summonHelper, ILevelCalculator levelCalculator, IStatCalculator statCalculator)
         {
             _userManager = userManager;
             _accountManager = accountManager;
             _summonHelper = summonHelper;
+            _levelCalculator = levelCalculator;
+            _statCalculator = statCalculator;
         }
 
         // Display a list of characters on your account.
@@ -36,7 +41,7 @@ namespace IdleAPI.Controllers
 
             var account = await _accountManager.GetOrCreateAccount(userId, true);
 
-            return account.Characters.Select(c => new CharacterModel(c)).ToArray();
+            return account.Characters.Select(c => new CharacterModel(c, _levelCalculator, _statCalculator)).ToArray();
         }
 
         // Summon new characters
@@ -58,7 +63,8 @@ namespace IdleAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var newCharacters = _summonHelper.SummonCharacters(account, quantity).Select(c => new CharacterModel(c)).ToArray();
+            var newCharacters = _summonHelper.SummonCharacters(account, quantity)
+                .Select(c => new CharacterModel(c, _levelCalculator, _statCalculator)).ToArray();
             await _accountManager.SaveChanges();
 
             return newCharacters;

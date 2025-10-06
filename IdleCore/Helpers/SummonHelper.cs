@@ -57,7 +57,7 @@ public class SummonHelper : ISummonHelper
         var newCharacter = new Character
         {
             AccountId = account.Id,
-            Level = 1,
+            Experience = 0,
             Rarity = GenerateRandomRarity(),
             Class = GenerateRandomClass(),
             FirstName = GenerateRandomFirstName(),
