@@ -63,11 +63,10 @@ namespace IdleAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var newCharacters = _summonHelper.SummonCharacters(account, quantity)
-                .Select(c => new CharacterModel(c, _levelCalculator, _statCalculator)).ToArray();
+            var newCharacters = _summonHelper.SummonCharacters(account, quantity).ToArray();
             await _accountManager.SaveChanges();
 
-            return newCharacters;
+            return newCharacters.Select(c => new CharacterModel(c, _levelCalculator, _statCalculator)).ToArray();
         }
     }
 }
