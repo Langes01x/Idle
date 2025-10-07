@@ -3,6 +3,9 @@
 }
 
 .character {
-    width: 200px;
     margin: 5px 3px;
+}
+
+.w-250px {
+    width: 250px;
 }

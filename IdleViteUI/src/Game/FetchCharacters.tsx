@@ -1,6 +1,6 @@
-import type { Character } from "./Characters";
+import type { CharacterInfo } from "./Characters";
 
-async function FetchCharacters(): Promise<Character[]> {
+async function FetchCharacters(): Promise<CharacterInfo[]> {
     const response = await fetch("/api/Characters", {
         method: "GET",
         headers: {
@@ -12,7 +12,7 @@ async function FetchCharacters(): Promise<Character[]> {
         const json = await response.json();
         throw new Error(json.message || response.statusText);
     }
-    return await response.json() as Character[];
+    return await response.json() as CharacterInfo[];
 };
 
 export default FetchCharacters;

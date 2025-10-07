@@ -1,7 +1,10 @@
 .info-grid {
     display: inline-grid;
     text-align: left;
-    grid-template-columns: auto 70%;
+    grid-template-columns: 1fr 1fr;
+}
+
+.w-200px {
     width: 200px;
 }
 

@@ -1,4 +1,4 @@
-using IdleDB;
+using IdleDB.Helpers;
 using IdleUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

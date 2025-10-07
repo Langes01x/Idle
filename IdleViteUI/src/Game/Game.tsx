@@ -58,7 +58,7 @@ function Game() {
 
     return (
         <div className="text-start">
-            <div className="info-grid">
+            <div className="info-grid w-200px">
                 <label>Experience:</label><output>{formatter.format(account!.experience)}</output>
                 <label>Gold:</label><output>{formatter.format(account!.gold)}</output>
                 <label>Diamonds:</label><output>{formatter.format(account!.diamonds)}</output>
@@ -68,7 +68,7 @@ function Game() {
                     {modelError && <div className="text-danger" role="alert">{modelError}</div>}
                     <button type="submit" className="w-100 btn btn-primary" disabled={isPending}>Collect Rewards</button>
                 </form>
-                <div className="info-grid">
+                <div className="info-grid w-200px">
                     <label>Experience:</label><output>{formatter.format(experienceRewards)}</output>
                     <label>Gold:</label><output>{formatter.format(goldRewards)}</output>
                     <label>Diamonds:</label><output>{formatter.format(diamondRewards)}</output>

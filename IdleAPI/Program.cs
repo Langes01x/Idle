@@ -1,6 +1,7 @@
 using IdleAPI.Converters;
 using IdleCore.Helpers;
 using IdleDB;
+using IdleDB.Helpers;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAccountManager, AccountManager>();
+builder.Services.AddScoped<ICharacterManager, CharacterManager>();
 builder.Services.AddScoped<ISummonHelper, SummonHelper>();
 builder.Services.AddScoped<ILevelCalculator, LevelCalculator>();
 builder.Services.AddScoped<IStatCalculator, StatCalculator>();

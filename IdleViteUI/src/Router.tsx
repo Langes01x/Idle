@@ -23,6 +23,7 @@ import Fetch2faInfo from "./Account/Manage/TwoFactor/Fetch2faInfo";
 import Characters from "./Game/Characters";
 import FetchCharacters from "./Game/FetchCharacters";
 import PersonalData from "./Account/Manage/PersonalData";
+import Character, { CharacterLoader } from "./Game/Character";
 
 const Router = createBrowserRouter([
     {
@@ -63,6 +64,7 @@ const Router = createBrowserRouter([
                 children: [
                     { index: true, Component: Game },
                     { path: "characters", Component: Characters, loader: FetchCharacters },
+                    { path: "characters/:id", Component: Character, loader: CharacterLoader },
                 ],
             },
         ],

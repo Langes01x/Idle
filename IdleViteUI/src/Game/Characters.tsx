@@ -5,9 +5,11 @@ import AccountContext from "../Account/AccountContext";
 import FetchAccount from "../Account/FetchAccount";
 import "./Characters.css"
 
-export type Character = {
+export type CharacterInfo = {
     id: number,
 
+    experience: number,
+    experienceToNextLevel: number,
     level: number,
     rarity: string,
     class: string,
@@ -22,37 +24,39 @@ export type Character = {
     wisdom: number,
 };
 
-function DisplayCharacter(char: Character) {
+function DisplayCharacter(char: CharacterInfo) {
     return (
-        <div className="rounded-box character">
-            <div className="info-grid">
-                <label>Name:</label><output>{char.firstName} {char.lastName}</output>
-                <label>Level:</label><output>{char.level}</output>
-                <label>Rarity:</label><output>{char.rarity}</output>
-                <label>Class:</label><output>{char.class}</output>
+        <Link to={"/game/characters/" + char.id}>
+            <div className="rounded-box character w-250px">
+                <div className="info-grid w-250px">
+                    <label>Name:</label><output>{char.firstName} {char.lastName}</output>
+                    <label>Level:</label><output>{char.level}</output>
+                    <label>Rarity:</label><output>{char.rarity}</output>
+                    <label>Class:</label><output>{char.class}</output>
+                </div>
+                <hr />
+                <div className="info-grid w-250px">
+                    <label>Strength:</label><output>{char.strength}</output>
+                    <label>Intelligence:</label><output>{char.intelligence}</output>
+                    <label>Dexterity:</label><output>{char.dexterity}</output>
+                    <label>Vitality:</label><output>{char.vitality}</output>
+                    <label>Constitution:</label><output>{char.constitution}</output>
+                    <label>Wisdom:</label><output>{char.wisdom}</output>
+                </div>
             </div>
-            <hr />
-            <div className="info-grid">
-                <label>Strength:</label><output>{char.strength}</output>
-                <label>Intelligence:</label><output>{char.intelligence}</output>
-                <label>Dexterity:</label><output>{char.dexterity}</output>
-                <label>Vitality:</label><output>{char.vitality}</output>
-                <label>Constitution:</label><output>{char.constitution}</output>
-                <label>Wisdom:</label><output>{char.wisdom}</output>
-            </div>
-        </div>
+        </Link>
     );
 };
 
 function Characters() {
-    const loadedCharacters = useLoaderData<Character[]>();
+    const loadedCharacters = useLoaderData<CharacterInfo[]>();
     const [characters, setCharacters] = useState(loadedCharacters);
     const { account, setAccount } = useContext(AccountContext);
     const formatter = new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 3 });
     const summonCost = 3600;
     const canSummonOnce = account!.diamonds >= summonCost;
     const canSummonTen = account!.diamonds >= summonCost * 10;
-    const [newCharacters, setNewCharacters] = useState<Character[] | null>(null);
+    const [newCharacters, setNewCharacters] = useState<CharacterInfo[] | null>(null);
     const [modalOpen, setModalOpen] = useState(true);
 
     function CloseModal() {
@@ -76,7 +80,7 @@ function Characters() {
                     }
                     return (<p>{response.statusText}</p>);
                 }
-                const json = await response.json() as Character[];
+                const json = await response.json() as CharacterInfo[];
                 setNewCharacters(json);
                 setCharacters(characters.concat(json));
                 setAccount(await FetchAccount());

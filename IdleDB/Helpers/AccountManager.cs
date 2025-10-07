@@ -1,7 +1,7 @@
 using IdleCore.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdleDB;
+namespace IdleDB.Helpers;
 
 public interface IAccountManager
 {
@@ -17,7 +17,7 @@ public interface IAccountManager
 
 public class AccountManager : IAccountManager
 {
-    private ApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
 
     public AccountManager(ApplicationDbContext context)
     {
