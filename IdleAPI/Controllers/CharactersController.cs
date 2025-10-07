@@ -90,5 +90,37 @@ namespace IdleAPI.Controllers
 
             return newCharacters.Select(c => new CharacterModel(c, _levelCalculator, _statCalculator)).ToArray();
         }
+
+        // Level up character
+        [HttpPost("{id:int}/LevelUp")]
+        public async Task<ActionResult<CharacterModel>> LevelUp(int id)
+        {
+            // Authorize attribute should prevent not having a user but return 401 if something breaks
+            var userId = _userManager.GetUserId(User);
+            if (userId is null)
+            {
+                return Unauthorized();
+            }
+
+            var character = await _characterManager.GetCharacter(id, userId);
+            if (character == null)
+            {
+                return NotFound();
+            }
+
+            var account = await _accountManager.GetOrCreateAccount(userId, true);
+            var experienceCost = _levelCalculator.GetExperienceToNextLevel(character);
+            if (account.Experience < experienceCost)
+            {
+                ModelState.AddModelError("experience", $"Not enough experience to level up character {id}");
+                return BadRequest(ModelState);
+            }
+
+            character.Experience += experienceCost;
+            account.Experience -= experienceCost;
+            await _accountManager.SaveChanges();
+
+            return new CharacterModel(character, _levelCalculator, _statCalculator);
+        }
     }
 }
