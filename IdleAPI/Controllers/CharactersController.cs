@@ -128,7 +128,7 @@ namespace IdleAPI.Controllers
                 return NotFound();
             }
 
-            var account = await _accountManager.GetOrCreateAccount(userId, true);
+            var account = await _accountManager.GetOrCreateAccount(userId);
             var experienceCost = _levelCalculator.GetExperienceToNextLevel(character);
             if (account.Experience < experienceCost)
             {
