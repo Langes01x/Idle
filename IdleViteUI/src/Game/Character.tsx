@@ -1,5 +1,7 @@
 import { Link, useLoaderData, type Params } from "react-router";
 import type { CharacterInfo } from "./Characters";
+import { useContext } from "react";
+import AccountContext from "../Account/AccountContext";
 
 export async function CharacterLoader({ params }: { params: Params<"id"> }) {
     const response = await fetch("/api/Characters/" + params.id, {
@@ -18,12 +20,15 @@ export async function CharacterLoader({ params }: { params: Params<"id"> }) {
 
 function Character() {
     const char = useLoaderData<CharacterInfo>();
+    const { account } = useContext(AccountContext);
     const formatter = new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 3 });
 
     return (
         <>
             <div className="text-start">
                 <Link to="/game/characters" className="btn btn-primary">&lt;&lt; Back</Link>
+                <label>Experience:</label>
+                <output>{formatter.format(account!.experience)}</output>
             </div>
             <div className="row">
                 <div className="rounded-box wide-character col-md-6">
