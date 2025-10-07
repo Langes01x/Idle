@@ -12,6 +12,11 @@ public interface IAccountManager
     /// <param name="includeCharacters">Whether to include characters in the query</param>
     /// <returns>The user's account</returns>
     Task<Account> GetOrCreateAccount(string userId, bool includeCharacters = false);
+
+    /// <summary>
+    /// Save any changes made to database objects.
+    /// </summary>
+    /// <returns>A task to be awaited.</returns>
     Task SaveChanges();
 }
 

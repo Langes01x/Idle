@@ -5,7 +5,18 @@ namespace IdleDB.Helpers;
 
 public interface ICharacterManager
 {
+    /// <summary>
+    /// Gets a character if it exists on the user's account.
+    /// </summary>
+    /// <param name="id">Character ID.</param>
+    /// <param name="userId">Account ID.</param>
+    /// <returns>The character if it exists.</returns>
     Task<Character?> GetCharacter(int id, string userId);
+
+    /// <summary>
+    /// Save any changes made to database objects.
+    /// </summary>
+    /// <returns>A task to be awaited.</returns>
     Task SaveChanges();
 }
 
