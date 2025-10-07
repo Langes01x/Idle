@@ -1,7 +1,36 @@
-import type { CharacterInfo } from "./Characters";
+export type CharacterInfo = {
+    id: number,
 
-async function FetchCharacters(): Promise<CharacterInfo[]> {
-    const response = await fetch("/api/Characters", {
+    experience: number,
+    experienceToNextLevel: number,
+    level: number,
+    rarity: string,
+    class: string,
+    firstName: string,
+    lastName: string,
+
+    strength: number,
+    intelligence: number,
+    dexterity: number,
+    vitality: number,
+    constitution: number,
+    wisdom: number,
+};
+
+export type CharacterSortOrderDictionary = {
+    [key: string]: number
+};
+
+export type GetCharactersInfo = {
+    characters: CharacterInfo[],
+    summonCost: number,
+    sortOrderOptions: CharacterSortOrderDictionary,
+    defaultSortOrder: number,
+}
+
+async function FetchCharacters(sortOrder: number | null): Promise<GetCharactersInfo> {
+    const sortOrderString = sortOrder === null ? "" : "?sortOrder=" + sortOrder;
+    const response = await fetch("/api/Characters" + sortOrderString, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -12,7 +41,7 @@ async function FetchCharacters(): Promise<CharacterInfo[]> {
         const json = await response.json();
         throw new Error(json.message || response.statusText);
     }
-    return await response.json() as CharacterInfo[];
+    return await response.json() as GetCharactersInfo;
 };
 
 export default FetchCharacters;

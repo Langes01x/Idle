@@ -11,4 +11,6 @@ public class Account
     public long Gold { get; set; }
     public long Diamonds { get; set; }
     public long LevelsCleared { get; set; }
+
+    public CharacterSortOrderEnum CharacterSortOrder { get; set; }
 }

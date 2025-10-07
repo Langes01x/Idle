@@ -1,5 +1,5 @@
 import { Link, useLoaderData, type Params } from "react-router";
-import type { CharacterInfo } from "./Characters";
+import type { CharacterInfo } from "./FetchCharacters";
 import { useActionState, useContext, useState, type JSX } from "react";
 import AccountContext from "../Account/AccountContext";
 import FetchAccount from "../Account/FetchAccount";

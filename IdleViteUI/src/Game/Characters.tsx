@@ -1,28 +1,11 @@
-import { useActionState, useContext, useState, type JSX } from "react"
+import { useActionState, useContext, useState, type ChangeEvent, type JSX } from "react"
 import { Link, useLoaderData } from "react-router";
 import { Modal } from "react-bootstrap";
 import AccountContext from "../Account/AccountContext";
 import FetchAccount from "../Account/FetchAccount";
+import type { CharacterInfo, GetCharactersInfo } from "./FetchCharacters";
 import "./Characters.css"
-
-export type CharacterInfo = {
-    id: number,
-
-    experience: number,
-    experienceToNextLevel: number,
-    level: number,
-    rarity: string,
-    class: string,
-    firstName: string,
-    lastName: string,
-
-    strength: number,
-    intelligence: number,
-    dexterity: number,
-    vitality: number,
-    constitution: number,
-    wisdom: number,
-};
+import FetchCharacters from "./FetchCharacters";
 
 function DisplayCharacter(char: CharacterInfo) {
     return (
@@ -48,12 +31,16 @@ function DisplayCharacter(char: CharacterInfo) {
     );
 };
 
+export async function CharactersLoader() {
+    return await FetchCharacters(null);
+}
+
 function Characters() {
-    const loadedCharacters = useLoaderData<CharacterInfo[]>();
+    const { characters: loadedCharacters, summonCost, sortOrderOptions, defaultSortOrder } = useLoaderData<GetCharactersInfo>();
+    const [sortOrder, setSortOrder] = useState(defaultSortOrder);
     const [characters, setCharacters] = useState(loadedCharacters);
     const { account, setAccount } = useContext(AccountContext);
     const formatter = new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 3 });
-    const summonCost = 3600;
     const canSummonOnce = account!.diamonds >= summonCost;
     const canSummonTen = account!.diamonds >= summonCost * 10;
     const [newCharacters, setNewCharacters] = useState<CharacterInfo[] | null>(null);
@@ -82,7 +69,7 @@ function Characters() {
                 }
                 const json = await response.json() as CharacterInfo[];
                 setNewCharacters(json);
-                setCharacters(characters.concat(json));
+                setCharacters((await FetchCharacters(null)).characters);
                 setAccount(await FetchAccount());
                 setModalOpen(true);
                 return null;
@@ -90,6 +77,22 @@ function Characters() {
                 if (error instanceof Error) {
                     return (<p>{error.message}</p>);
                 }
+            }
+        },
+        null,
+    );
+
+    const [sortError, handleSort, isSortPending] = useActionState<JSX.Element | null | undefined, ChangeEvent<HTMLSelectElement>>(
+        async (_previousState, event) => {
+            event.preventDefault();
+            try {
+                const newValue = +event.target.value;
+                const charactersInfo = await FetchCharacters(newValue);
+                setCharacters(charactersInfo.characters);
+                setSortOrder(newValue);
+                return null;
+            } catch {
+                return (<p>Sorting failed</p>);
             }
         },
         null,
@@ -121,7 +124,16 @@ function Characters() {
                 </form >
                 <label>Diamonds:</label>
                 <output>{formatter.format(account!.diamonds)}</output>
-            </div >
+                <form className="float-end">
+                    {sortError && <div className="text-danger" role="alert">{sortError}</div>}
+                    <label htmlFor="sortOrder">Sort by:&nbsp;</label>
+                    <select id="sortOrder" name="sortOrder" value={sortOrder} onChange={handleSort} disabled={isSortPending}>
+                        {
+                            Object.entries<number>(sortOrderOptions).map(([label, value]) => <option key={label} value={value}>{label}</option>)
+                        }
+                    </select>
+                </form>
+            </div>
             <div className="char-grid">
                 {characters.map(DisplayCharacter)}
             </div>

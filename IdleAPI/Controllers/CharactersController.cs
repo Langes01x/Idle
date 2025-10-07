@@ -1,5 +1,6 @@
 using IdleAPI.Models;
 using IdleCore.Helpers;
+using IdleCore.Model;
 using IdleDB.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -18,9 +19,12 @@ namespace IdleAPI.Controllers
         private readonly ISummonHelper _summonHelper;
         private readonly ILevelCalculator _levelCalculator;
         private readonly IStatCalculator _statCalculator;
+        private readonly ICharacterSorter _characterSorter;
+        private readonly IEnumMapper _enumMapper;
 
         public CharactersController(UserManager<IdentityUser> userManager, IAccountManager accountManager, ICharacterManager characterManager,
-            ISummonHelper summonHelper, ILevelCalculator levelCalculator, IStatCalculator statCalculator)
+            ISummonHelper summonHelper, ILevelCalculator levelCalculator, IStatCalculator statCalculator, ICharacterSorter characterSorter,
+            IEnumMapper enumMapper)
         {
             _userManager = userManager;
             _accountManager = accountManager;
@@ -28,11 +32,13 @@ namespace IdleAPI.Controllers
             _summonHelper = summonHelper;
             _levelCalculator = levelCalculator;
             _statCalculator = statCalculator;
+            _characterSorter = characterSorter;
+            _enumMapper = enumMapper;
         }
 
         // Display a list of characters on your account.
         [HttpGet]
-        public async Task<ActionResult<CharacterModel[]>> Get()
+        public async Task<ActionResult<GetCharactersModel>> Get(CharacterSortOrderEnum? sortOrder)
         {
             // Authorize attribute should prevent not having a user but return 401 if something breaks
             var userId = _userManager.GetUserId(User);
@@ -42,8 +48,22 @@ namespace IdleAPI.Controllers
             }
 
             var account = await _accountManager.GetOrCreateAccount(userId, true);
+            if (sortOrder is not null)
+            {
+                account.CharacterSortOrder = sortOrder.Value;
+                await _accountManager.SaveChanges();
+            }
 
-            return account.Characters.Select(c => new CharacterModel(c, _levelCalculator, _statCalculator)).ToArray();
+            return new GetCharactersModel
+            {
+                Characters = _characterSorter
+                    .SortCharacters(account.Characters, account.CharacterSortOrder)
+                    .Select(c => new CharacterModel(c, _levelCalculator, _statCalculator))
+                    .ToArray(),
+                SummonCost = _summonHelper.SummonCost,
+                SortOrderOptions = _enumMapper.GetEnumMapping<CharacterSortOrderEnum>(),
+                DefaultSortOrder = account.CharacterSortOrder,
+            };
         }
 
         // Display a character on your account.
