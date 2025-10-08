@@ -1,7 +1,6 @@
 # Ideas:
 - Character details
   - Computed stats
-  - Dismissal - Returns exp and some amount of diamonds
 - Party - 3 characters
 - Account leveling
 - Cap idle gains to 24 hours?

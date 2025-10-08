@@ -8,13 +8,16 @@ public class CharacterModel
     public CharacterModel(Character character, ILevelCalculator levelCalculator, IStatCalculator statCalculator)
     {
         Id = character.Id;
+
         Experience = character.Experience;
         ExperienceToNextLevel = levelCalculator.GetExperienceToNextLevel(character);
         Level = levelCalculator.GetLevel(character);
+
         Rarity = character.Rarity.ToString();
         Class = character.Class.ToString();
         FirstName = character.FirstName.ToString();
         LastName = character.LastName.ToString();
+
         Strength = statCalculator.CalculateStrength(character, Level);
         Intelligence = statCalculator.CalculateIntelligence(character, Level);
         Dexterity = statCalculator.CalculateDexterity(character, Level);
@@ -28,6 +31,7 @@ public class CharacterModel
     public long Experience { get; set; }
     public long ExperienceToNextLevel { get; set; }
     public int Level { get; set; }
+
     public string Rarity { get; set; }
     public string Class { get; set; }
     public string FirstName { get; set; }
