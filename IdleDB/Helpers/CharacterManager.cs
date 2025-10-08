@@ -14,6 +14,12 @@ public interface ICharacterManager
     Task<Character?> GetCharacter(int id, string userId);
 
     /// <summary>
+    /// Delete a character.
+    /// </summary>
+    /// <param name="character">The character to delete.</param>
+    void DeleteCharacter(Character character);
+
+    /// <summary>
     /// Save any changes made to database objects.
     /// </summary>
     /// <returns>A task to be awaited.</returns>
@@ -32,6 +38,11 @@ public class CharacterManager : ICharacterManager
     public async Task<Character?> GetCharacter(int id, string userId)
     {
         return await _context.Characters.SingleOrDefaultAsync(c => c.Id == id && c.AccountId == userId);
+    }
+
+    public void DeleteCharacter(Character character)
+    {
+        _context.Characters.Remove(character);
     }
 
     public async Task SaveChanges()

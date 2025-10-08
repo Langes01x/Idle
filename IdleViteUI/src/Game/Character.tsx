@@ -1,8 +1,9 @@
-import { Link, useLoaderData, type Params } from "react-router";
+import { Link, useLoaderData, useNavigate, type Params } from "react-router";
 import type { CharacterInfo } from "./FetchCharacters";
 import { useActionState, useContext, useState, type JSX } from "react";
 import AccountContext from "../Account/AccountContext";
 import FetchAccount from "../Account/FetchAccount";
+import { Modal } from "react-bootstrap";
 
 export async function CharacterLoader({ params }: { params: Params<"id"> }) {
     const response = await fetch("/api/Characters/" + params.id, {
@@ -21,12 +22,22 @@ export async function CharacterLoader({ params }: { params: Params<"id"> }) {
 
 function Character() {
     const loadedCharacter = useLoaderData<CharacterInfo>();
+    const navigate = useNavigate();
     const [character, setCharacter] = useState(loadedCharacter);
     const { account, setAccount } = useContext(AccountContext);
+    const [modalOpen, setModalOpen] = useState(false);
     const canLevelUp = account!.experience >= character.experienceToNextLevel;
     const formatter = new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 3 });
 
-    const [modelError, handleLevelUp, isPending] = useActionState<JSX.Element | null | undefined, FormData>(
+    function OpenModal() {
+        setModalOpen(true);
+    };
+
+    function CloseModal() {
+        setModalOpen(false);
+    };
+
+    const [levelUpError, handleLevelUp, isLevelUpPending] = useActionState<JSX.Element | null | undefined, FormData>(
         async () => {
             try {
                 const response = await fetch("/api/Characters/" + character.id + "/LevelUp", {
@@ -56,13 +67,60 @@ function Character() {
         null,
     );
 
+    const [dismissError, handleDismiss, isDismissPending] = useActionState<JSX.Element | null | undefined, FormData>(
+        async () => {
+            try {
+                const response = await fetch("/api/Characters/" + character.id + "/Dismiss", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                });
+                if (!response.ok) {
+                    const json = await response.json();
+                    if ('errors' in json) {
+                        return (<>{Object.values<string>(json.errors).map((val: string) => { return (<p>{val}</p>); })}</>);
+                    }
+                    return (<p>{response.statusText}</p>);
+                }
+                setAccount(await FetchAccount());
+                navigate("/game/characters");
+                return null;
+            } catch (error) {
+                if (error instanceof Error) {
+                    return (<p>{error.message}</p>);
+                }
+            }
+        },
+        null,
+    );
+
     return (
         <>
             <div className="text-start">
-                {modelError && <div className="text-danger" role="alert">{modelError}</div>}
+                <Modal show={modalOpen} onHide={CloseModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Dismiss Character?</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="alert alert-warning" role="alert">
+                            <p>
+                                Dismissing the character will return all experience and give 100 diamonds.
+                                Dismissing a character can not be undone so ensure you are dismissing the correct one.
+                            </p>
+                        </div>
+                        <form action={handleDismiss}>
+                            {dismissError && <div className="text-danger" role="alert">{dismissError}</div>}
+                            <button className="w-100 btn btn-lg btn-danger" type="submit" disabled={isDismissPending}>Dismiss</button>
+                        </form>
+                    </Modal.Body>
+                </Modal>
                 <Link to="/game/characters" className="btn btn-primary">&lt;&lt; Back</Link>
+                <button className="btn btn-primary" onClick={OpenModal}>Dismiss</button>
+                {levelUpError && <div className="text-danger" role="alert">{levelUpError}</div>}
                 <form className="d-inline-block" action={handleLevelUp}>
-                    <button type="submit" className="btn btn-primary" disabled={!canLevelUp || isPending}>Level Up</button>
+                    <button type="submit" className="btn btn-primary" disabled={!canLevelUp || isLevelUpPending}>Level Up</button>
                 </form>
                 <label>Experience:</label>
                 <output>{formatter.format(account!.experience)}</output>

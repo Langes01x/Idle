@@ -142,5 +142,31 @@ namespace IdleAPI.Controllers
 
             return new CharacterModel(character, _levelCalculator, _statCalculator);
         }
+
+        // Dismiss character
+        [HttpPost("{id:int}/Dismiss")]
+        public async Task<IActionResult> Dismiss(int id)
+        {
+            // Authorize attribute should prevent not having a user but return 401 if something breaks
+            var userId = _userManager.GetUserId(User);
+            if (userId is null)
+            {
+                return Unauthorized();
+            }
+
+            var character = await _characterManager.GetCharacter(id, userId);
+            if (character == null)
+            {
+                return NotFound();
+            }
+
+            var account = await _accountManager.GetOrCreateAccount(userId);
+            account.Experience += character.Experience;
+            account.Diamonds += 100;
+            _characterManager.DeleteCharacter(character);
+            await _characterManager.SaveChanges();
+
+            return Ok();
+        }
     }
 }
