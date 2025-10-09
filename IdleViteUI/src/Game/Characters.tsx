@@ -31,6 +31,46 @@ function DisplayCharacter(char: CharacterInfo) {
     );
 };
 
+function DisplayNewCharacter(char: CharacterInfo) {
+    let opacity = "opacity-0";
+    switch (char.rarity) {
+        case "Legendary":
+            opacity = "opacity-100";
+            break;
+        case "Epic":
+            opacity = "opacity-75";
+            break;
+        case "Rare":
+            opacity = "opacity-50";
+            break;
+        case "Uncommon":
+            opacity = "opacity-25";
+            break;
+    };
+    return (
+        <div className="new-char-container character">
+            <div className={"new-char-border " + opacity}></div>
+            <div className="new-char-content">
+                <div className="info-grid w-100">
+                    <label>Name:</label><output>{char.firstName} {char.lastName}</output>
+                    <label>Level:</label><output>{char.level}</output>
+                    <label>Rarity:</label><output>{char.rarity}</output>
+                    <label>Class:</label><output>{char.class}</output>
+                </div>
+                <hr />
+                <div className="info-grid w-100">
+                    <label>Strength:</label><output>{char.strength}</output>
+                    <label>Intelligence:</label><output>{char.intelligence}</output>
+                    <label>Dexterity:</label><output>{char.dexterity}</output>
+                    <label>Vitality:</label><output>{char.vitality}</output>
+                    <label>Constitution:</label><output>{char.constitution}</output>
+                    <label>Wisdom:</label><output>{char.wisdom}</output>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 export async function CharactersLoader() {
     return await FetchCharacters(null);
 }
@@ -107,7 +147,7 @@ function Characters() {
                         <Modal.Title>New Characters</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <div className="char-grid">{newCharacters.map(DisplayCharacter)}</div>
+                        <div className="char-grid">{newCharacters.map(DisplayNewCharacter)}</div>
                     </Modal.Body>
                 </Modal>
             }

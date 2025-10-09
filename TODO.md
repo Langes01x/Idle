@@ -1,6 +1,6 @@
 # Ideas:
 - Character details
-  - Computed stats
+  - Equipment
 - Party - 3 characters
 - Account leveling
 - Cap idle gains to 24 hours?
