@@ -31,6 +31,12 @@ public class SummonHelper : ISummonHelper
         (RarityEnum.Legendary, 0.03),
     ];
 
+    private readonly (RarityEnum, double)[] _guaranteedRarityTable = [
+        (RarityEnum.Rare, 0.90),
+        (RarityEnum.Epic, 0.07),
+        (RarityEnum.Legendary, 0.03),
+    ];
+
     public SummonHelper(Random rng)
     {
         _rng = rng;
@@ -40,10 +46,9 @@ public class SummonHelper : ISummonHelper
 
     public IEnumerable<Character> SummonCharacters(Account account, int quantity, bool pullIsFree)
     {
-        while (quantity > 0)
+        for (var pullCount = 1; pullCount <= quantity; pullCount++)
         {
-            quantity--;
-            yield return SummonCharacter(account, pullIsFree);
+            yield return SummonCharacter(account, pullIsFree, pullCount % 10 == 0);
         }
     }
 
@@ -52,8 +57,9 @@ public class SummonHelper : ISummonHelper
     /// </summary>
     /// <param name="accountId">Id for the account this character belongs to.</param>
     /// <param name="pullIsFree">A flag determining whether the pull is free.</param>
+    /// <param name="guaranteedPull">A flag determining whether the pull has a guaranteed rarity.</param>
     /// <returns>The newly generated character.</returns>
-    private Character SummonCharacter(Account account, bool pullIsFree)
+    private Character SummonCharacter(Account account, bool pullIsFree, bool guaranteedPull)
     {
         if (pullIsFree)
         {
@@ -67,7 +73,7 @@ public class SummonHelper : ISummonHelper
         {
             AccountId = account.Id,
             Experience = 0,
-            Rarity = GenerateRandomRarity(),
+            Rarity = GenerateRandomRarity(guaranteedPull),
             Class = GenerateRandomClass(),
             FirstName = GenerateRandomFirstName(),
             LastName = GenerateRandomLastName(),
@@ -78,13 +84,15 @@ public class SummonHelper : ISummonHelper
 
     /// <summary>
     /// Generate a random rarity based on rarity percentages in the rarity table.
+    /// <param name="guaranteedPull">A flag determining whether the pull has a guaranteed rarity.</param>
     /// </summary>
     /// <returns>A random weighted rarity.</returns>
-    private RarityEnum GenerateRandomRarity()
+    private RarityEnum GenerateRandomRarity(bool guaranteedPull)
     {
         var rarityRoll = _rng.NextDouble();
         var rollCap = 0.0;
-        foreach (var rarityTier in _rarityTable)
+        var table = guaranteedPull ? _guaranteedRarityTable : _rarityTable;
+        foreach (var rarityTier in table)
         {
             rollCap += rarityTier.Item2;
             if (rollCap > rarityRoll)
@@ -92,7 +100,9 @@ public class SummonHelper : ISummonHelper
                 return rarityTier.Item1;
             }
         }
-        return RarityEnum.Common;
+        // Should never be hit as the rarity table should total to 1.0 and
+        // the random function always returns a value less than 1.0
+        throw new Exception($"Could not generate rarity for roll {rarityRoll}. Ensure that the rarity table totals to 1.0");
     }
 
     /// <summary>
