@@ -5,6 +5,7 @@ export type Account = {
     email: string,
     lastIdleCollection: Date,
     levelsCleared: number,
+    hasUsedFreePull: boolean,
 
     experience: number,
     gold: number,

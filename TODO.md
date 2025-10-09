@@ -1,4 +1,8 @@
 # Ideas:
+- 10x initial free summons
+    - one guaranteed 3* or higher
+- 10x summon
+    - one guaranteed 3* or higher
 - Character details
   - Equipment
 - Party - 3 characters

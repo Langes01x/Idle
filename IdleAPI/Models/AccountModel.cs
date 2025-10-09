@@ -11,6 +11,7 @@ public class AccountModel
         Email = email;
         LastIdleCollection = account.LastIdleCollection;
         LevelsCleared = account.LevelsCleared;
+        HasUsedFreePull = account.HasUsedFreePull;
 
         Experience = account.Experience;
         Gold = account.Gold;
@@ -25,6 +26,7 @@ public class AccountModel
     public string Email { get; set; }
     public DateTime LastIdleCollection { get; set; }
     public long LevelsCleared { get; set; }
+    public bool HasUsedFreePull { get; set; }
 
     public long Experience { get; set; }
     public long Gold { get; set; }

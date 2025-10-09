@@ -14,8 +14,9 @@ public interface ISummonHelper
     /// </summary>
     /// <param name="account">Account to summon characters for.</param>
     /// <param name="quantity">Quantity of characters to summon.</param>
+    /// <param name="pullIsFree">A flag determining whether the pull is free.</param>
     /// <returns>The characters which were summoned.</returns>
-    IEnumerable<Character> SummonCharacters(Account account, int quantity);
+    IEnumerable<Character> SummonCharacters(Account account, int quantity, bool pullIsFree);
 }
 
 public class SummonHelper : ISummonHelper
@@ -37,12 +38,12 @@ public class SummonHelper : ISummonHelper
 
     public int SummonCost => 3600;
 
-    public IEnumerable<Character> SummonCharacters(Account account, int quantity)
+    public IEnumerable<Character> SummonCharacters(Account account, int quantity, bool pullIsFree)
     {
         while (quantity > 0)
         {
             quantity--;
-            yield return SummonCharacter(account);
+            yield return SummonCharacter(account, pullIsFree);
         }
     }
 
@@ -50,10 +51,18 @@ public class SummonHelper : ISummonHelper
     /// Generate a random character.
     /// </summary>
     /// <param name="accountId">Id for the account this character belongs to.</param>
+    /// <param name="pullIsFree">A flag determining whether the pull is free.</param>
     /// <returns>The newly generated character.</returns>
-    private Character SummonCharacter(Account account)
+    private Character SummonCharacter(Account account, bool pullIsFree)
     {
-        account.Diamonds -= SummonCost;
+        if (pullIsFree)
+        {
+            account.HasUsedFreePull = true;
+        }
+        else
+        {
+            account.Diamonds -= SummonCost;
+        }
         var newCharacter = new Character
         {
             AccountId = account.Id,

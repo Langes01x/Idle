@@ -99,13 +99,18 @@ namespace IdleAPI.Controllers
 
             // Need to load characters at the same time so EF will fix up the navigation property
             var account = await _accountManager.GetOrCreateAccount(userId, true);
-            if (account.Diamonds < (quantity * _summonHelper.SummonCost))
+            // First 10 pull is free
+            var pullIsFree = !account.HasUsedFreePull && quantity == 10;
+            if (!pullIsFree)
             {
-                ModelState.AddModelError("quantity", $"Not enough diamonds to summon {quantity} times");
-                return BadRequest(ModelState);
+                if (account.Diamonds < (quantity * _summonHelper.SummonCost))
+                {
+                    ModelState.AddModelError("quantity", $"Not enough diamonds to summon {quantity} times");
+                    return BadRequest(ModelState);
+                }
             }
 
-            var newCharacters = _summonHelper.SummonCharacters(account, quantity).ToArray();
+            var newCharacters = _summonHelper.SummonCharacters(account, quantity, pullIsFree).ToArray();
             await _accountManager.SaveChanges();
 
             return newCharacters.Select(c => new CharacterModel(c, _levelCalculator, _statCalculator)).ToArray();
