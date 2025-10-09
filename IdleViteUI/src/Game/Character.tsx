@@ -5,6 +5,21 @@ import AccountContext from "../Account/AccountContext";
 import FetchAccount from "../Account/FetchAccount";
 import { Modal } from "react-bootstrap";
 
+interface DetailedCharacterInfo extends CharacterInfo {
+    physicalDamage: number,
+    aetherDamage: number,
+    critRating: number,
+    critMultiplier: number,
+    actionSpeed: number,
+    health: number,
+    armour: number,
+    barrier: number,
+    evasion: number,
+    fireResistance: number,
+    coldResistance: number,
+    poisonResistance: number,
+};
+
 export async function CharacterLoader({ params }: { params: Params<"id"> }) {
     const response = await fetch("/api/Characters/" + params.id, {
         method: "GET",
@@ -17,17 +32,20 @@ export async function CharacterLoader({ params }: { params: Params<"id"> }) {
         const json = await response.json();
         throw new Error(json.message || response.statusText);
     }
-    return await response.json() as CharacterInfo;
+    return await response.json() as DetailedCharacterInfo;
 };
 
 function Character() {
-    const loadedCharacter = useLoaderData<CharacterInfo>();
+    const loadedCharacter = useLoaderData<DetailedCharacterInfo>();
     const navigate = useNavigate();
     const [character, setCharacter] = useState(loadedCharacter);
     const { account, setAccount } = useContext(AccountContext);
     const [modalOpen, setModalOpen] = useState(false);
     const canLevelUp = account!.experience >= character.experienceToNextLevel;
-    const formatter = new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 3 });
+    const compactFormatter = new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 3 });
+    const percentFormatter = new Intl.NumberFormat(undefined, { style: 'percent' });
+    const speedFormatter = new Intl.NumberFormat(undefined, { style: 'unit', unit: 'second', maximumFractionDigits: 2 });
+    const statFormatter = new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 });
 
     function OpenModal() {
         setModalOpen(true);
@@ -54,7 +72,7 @@ function Character() {
                     }
                     return (<p>{response.statusText}</p>);
                 }
-                const json = await response.json() as CharacterInfo;
+                const json = await response.json() as DetailedCharacterInfo;
                 setCharacter(json);
                 setAccount(await FetchAccount());
                 return null;
@@ -123,29 +141,70 @@ function Character() {
                     <button type="submit" className="btn btn-primary" disabled={!canLevelUp || isLevelUpPending}>Level Up</button>
                 </form>
                 <label>Experience:</label>
-                <output>{formatter.format(account!.experience)}</output>
-            </div>
-            <div className="row">
-                <div className="rounded-box wide-character col-md-6">
-                    <div className="info-grid w-100">
-                        <label>Name:</label><output>{character.firstName} {character.lastName}</output>
-                        <label>Level:</label><output>{character.level}</output>
-                        <label>Rarity:</label><output>{character.rarity}</output>
-                        <label>Class:</label><output>{character.class}</output>
+                <output>{compactFormatter.format(account!.experience)}</output>
+                <div className="row">
+                    <div className="col-md-6 col-sm-12">
+                        <div className="rounded-box col-sm-12">
+                            <div className="info-grid w-100">
+                                <label>Name:</label><output>{character.firstName} {character.lastName}</output>
+                                <label>Level:</label><output>{character.level}</output>
+                                <label>Rarity:</label><output>{character.rarity}</output>
+                                <label>Class:</label><output>{character.class}</output>
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="rounded-box col-sm-12">
+                            <div className="info-grid w-100">
+                                <label>Total Experience:</label><output>{compactFormatter.format(character.experience)}</output>
+                                <label>To Next Level:</label><output>{compactFormatter.format(character.experienceToNextLevel)}</output>
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="rounded-box col-sm-12">
+                            <div className="info-grid w-100">
+                                <label>Strength:</label><output>{character.strength}</output>
+                                <label>Intelligence:</label><output>{character.intelligence}</output>
+                                <label>Dexterity:</label><output>{character.dexterity}</output>
+                                <label>Vitality:</label><output>{character.vitality}</output>
+                                <label>Constitution:</label><output>{character.constitution}</output>
+                                <label>Wisdom:</label><output>{character.wisdom}</output>
+                            </div>
+                        </div>
                     </div>
-                    <hr />
-                    <div className="info-grid w-100">
-                        <label>Total Experience:</label><output>{formatter.format(character.experience)}</output>
-                        <label>To Next Level:</label><output>{formatter.format(character.experienceToNextLevel)}</output>
+                    <div className="col-sm-12 d-sm-block d-md-none">
+                        <hr />
                     </div>
-                    <hr />
-                    <div className="info-grid w-100">
-                        <label>Strength:</label><output>{character.strength}</output>
-                        <label>Intelligence:</label><output>{character.intelligence}</output>
-                        <label>Dexterity:</label><output>{character.dexterity}</output>
-                        <label>Vitality:</label><output>{character.vitality}</output>
-                        <label>Constitution:</label><output>{character.constitution}</output>
-                        <label>Wisdom:</label><output>{character.wisdom}</output>
+                    <div className="col-md-6">
+                        <div className="rounded-box col-sm-12">
+                            <div className="info-grid w-100">
+                                <label>Physical Damage:</label><output>{statFormatter.format(character.physicalDamage)}</output>
+                                <label>Aether Damage:</label><output>{statFormatter.format(character.aetherDamage)}</output>
+                                <label>Crit Rating:</label><output>{statFormatter.format(character.critRating)}</output>
+                                <label>Crit Multiplier:</label><output>{percentFormatter.format(character.critMultiplier)}</output>
+                                <label>Action Speed:</label><output>{speedFormatter.format(character.actionSpeed)}</output>
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="rounded-box col-sm-12">
+                            <div className="info-grid w-100">
+                                <label>Health:</label><output>{statFormatter.format(character.health)}</output>
+                                <label>Armour:</label><output>{statFormatter.format(character.armour)}</output>
+                                <label>Barrier:</label><output>{statFormatter.format(character.barrier)}</output>
+                                <label>Evasion:</label><output>{percentFormatter.format(character.evasion)}</output>
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="rounded-box col-sm-12">
+                            <div className="info-grid col-md-4 col-sm-12">
+                                <label>Fire Resistance:</label><output>{percentFormatter.format(character.fireResistance)}</output>
+                            </div>
+                            <div className="info-grid col-md-4 col-sm-12">
+                                <label>Cold Resistance:</label><output>{percentFormatter.format(character.coldResistance)}</output>
+                            </div>
+                            <div className="info-grid col-md-4 col-sm-12">
+                                <label>Poison Resistance:</label><output>{percentFormatter.format(character.poisonResistance)}</output>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

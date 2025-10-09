@@ -68,7 +68,7 @@ namespace IdleAPI.Controllers
 
         // Display a character on your account.
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<CharacterModel>> Get(int id)
+        public async Task<ActionResult<DetailedCharacterModel>> Get(int id)
         {
             // Authorize attribute should prevent not having a user but return 401 if something breaks
             var userId = _userManager.GetUserId(User);
@@ -83,7 +83,7 @@ namespace IdleAPI.Controllers
                 return NotFound();
             }
 
-            return new CharacterModel(character, _levelCalculator, _statCalculator);
+            return new DetailedCharacterModel(character, _levelCalculator, _statCalculator);
         }
 
         // Summon new characters
@@ -113,7 +113,7 @@ namespace IdleAPI.Controllers
 
         // Level up character
         [HttpPost("{id:int}/LevelUp")]
-        public async Task<ActionResult<CharacterModel>> LevelUp(int id)
+        public async Task<ActionResult<DetailedCharacterModel>> LevelUp(int id)
         {
             // Authorize attribute should prevent not having a user but return 401 if something breaks
             var userId = _userManager.GetUserId(User);
@@ -140,7 +140,7 @@ namespace IdleAPI.Controllers
             account.Experience -= experienceCost;
             await _accountManager.SaveChanges();
 
-            return new CharacterModel(character, _levelCalculator, _statCalculator);
+            return new DetailedCharacterModel(character, _levelCalculator, _statCalculator);
         }
 
         // Dismiss character
