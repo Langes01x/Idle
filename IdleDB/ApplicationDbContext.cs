@@ -17,6 +17,8 @@ public class ApplicationDbContext : IdentityDbContext
 
     public DbSet<Character> Characters { get; set; } = default!;
 
+    public DbSet<Party> Parties { get; set; } = default!;
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -30,7 +32,16 @@ public class ApplicationDbContext : IdentityDbContext
         builder.Entity<Character>(b =>
         {
             b.HasKey(c => c.Id);
-            b.HasOne(c => c.Account).WithMany(a => a.Characters).HasPrincipalKey(a => a.Id).HasForeignKey(c => c.AccountId).IsRequired();
+            b.HasOne<Account>().WithMany(a => a.Characters).HasPrincipalKey(a => a.Id).HasForeignKey(c => c.AccountId).IsRequired();
+        });
+
+        builder.Entity<Party>(b =>
+        {
+            b.HasKey(p => p.Id);
+            b.HasOne(p => p.BackCharacter).WithMany().HasPrincipalKey(c => c.Id).HasForeignKey(p => p.BackCharacterId);
+            b.HasOne(p => p.MiddleCharacter).WithMany().HasPrincipalKey(c => c.Id).HasForeignKey(p => p.MiddleCharacterId);
+            b.HasOne(p => p.FrontCharacter).WithMany().HasPrincipalKey(c => c.Id).HasForeignKey(p => p.FrontCharacterId);
+            b.HasOne<Account>().WithMany(a => a.Parties).HasPrincipalKey(a => a.Id).HasForeignKey(p => p.AccountId).IsRequired();
         });
     }
 

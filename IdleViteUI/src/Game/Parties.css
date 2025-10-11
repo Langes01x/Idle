@@ -1,0 +1,11 @@
+.add-button {
+    display: flex;
+    height: 270px;
+    align-items: center;
+    justify-content: center;
+    font-size: xx-large;
+}
+
+.carousel {
+    min-height: 380px;
+}

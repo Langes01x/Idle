@@ -1,17 +1,17 @@
 # Ideas:
-- 10x initial free summons
-    - one guaranteed 3* or higher
-- 10x summon
-    - one guaranteed 3* or higher
+- Battle Stages
 - Character details
-  - Equipment
-- Party - 3 characters
+    - Equipment
 - Account leveling
 - Cap idle gains to 24 hours?
 - Equipment shop
-  - Refresh daily
-  - Generate shop items from a stored seed
-  -
+    - Refresh daily
+    - Generate shop items from a stored seed
+- Quests
+    - Total experience accumulated
+    - Total levels cleared
+    - Level up a character
+    - Buy an item
 
 
 # Currency types:

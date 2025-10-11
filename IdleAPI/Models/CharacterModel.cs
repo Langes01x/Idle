@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using IdleCore.Helpers;
 using IdleCore.Model;
 
@@ -5,6 +6,15 @@ namespace IdleAPI.Models;
 
 public class CharacterModel
 {
+    [JsonConstructor]
+    private CharacterModel()
+    {
+        Rarity = "";
+        Class = "";
+        FirstName = "";
+        LastName = "";
+    }
+
     public CharacterModel(Character character, ILevelCalculator levelCalculator, IStatCalculator statCalculator)
     {
         Id = character.Id;

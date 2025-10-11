@@ -9,25 +9,33 @@ import FetchCharacters from "./FetchCharacters";
 
 function DisplayCharacter(char: CharacterInfo) {
     return (
-        <Link to={"/game/characters/" + char.id}>
-            <div className="rounded-box character w-250px">
-                <div className="info-grid w-250px">
-                    <label>Name:</label><output>{char.firstName} {char.lastName}</output>
-                    <label>Level:</label><output>{char.level}</output>
-                    <label>Rarity:</label><output>{char.rarity}</output>
-                    <label>Class:</label><output>{char.class}</output>
-                </div>
-                <hr />
-                <div className="info-grid w-250px">
-                    <label>Strength:</label><output>{char.strength}</output>
-                    <label>Intelligence:</label><output>{char.intelligence}</output>
-                    <label>Dexterity:</label><output>{char.dexterity}</output>
-                    <label>Vitality:</label><output>{char.vitality}</output>
-                    <label>Constitution:</label><output>{char.constitution}</output>
-                    <label>Wisdom:</label><output>{char.wisdom}</output>
-                </div>
+        <Link className="btn btn-dark character-button" to={"/game/characters/" + char.id}>
+            <div className="rounded-box character">
+                {DisplayCharacterInfo(char)}
             </div>
         </Link>
+    );
+};
+
+export function DisplayCharacterInfo(char: CharacterInfo) {
+    return (
+        <>
+            <div className="info-grid w-100">
+                <label>Name:</label><output>{char.firstName} {char.lastName}</output>
+                <label>Level:</label><output>{char.level}</output>
+                <label>Rarity:</label><output>{char.rarity}</output>
+                <label>Class:</label><output>{char.class}</output>
+            </div>
+            <hr />
+            <div className="info-grid w-100">
+                <label>Strength:</label><output>{char.strength}</output>
+                <label>Intelligence:</label><output>{char.intelligence}</output>
+                <label>Dexterity:</label><output>{char.dexterity}</output>
+                <label>Vitality:</label><output>{char.vitality}</output>
+                <label>Constitution:</label><output>{char.constitution}</output>
+                <label>Wisdom:</label><output>{char.wisdom}</output>
+            </div>
+        </>
     );
 };
 
@@ -51,21 +59,7 @@ function DisplayNewCharacter(char: CharacterInfo) {
         <div className="new-char-container character">
             <div className={"new-char-border " + opacity}></div>
             <div className="new-char-content">
-                <div className="info-grid w-100">
-                    <label>Name:</label><output>{char.firstName} {char.lastName}</output>
-                    <label>Level:</label><output>{char.level}</output>
-                    <label>Rarity:</label><output>{char.rarity}</output>
-                    <label>Class:</label><output>{char.class}</output>
-                </div>
-                <hr />
-                <div className="info-grid w-100">
-                    <label>Strength:</label><output>{char.strength}</output>
-                    <label>Intelligence:</label><output>{char.intelligence}</output>
-                    <label>Dexterity:</label><output>{char.dexterity}</output>
-                    <label>Vitality:</label><output>{char.vitality}</output>
-                    <label>Constitution:</label><output>{char.constitution}</output>
-                    <label>Wisdom:</label><output>{char.wisdom}</output>
-                </div>
+                {DisplayCharacterInfo(char)}
             </div>
         </div>
     );
@@ -139,7 +133,7 @@ function Characters() {
     );
 
     return (
-        <div className="text-start">
+        <div>
             {
                 newCharacters &&
                 <Modal show={modalOpen} onHide={CloseModal}>
@@ -151,7 +145,7 @@ function Characters() {
                     </Modal.Body>
                 </Modal>
             }
-            <div>
+            <div className="text-start">
                 {modelError && <div className="text-danger" role="alert">{modelError}</div>}
                 <Link to="/game" className="btn btn-primary">&lt;&lt; Back</Link>
                 <form className="d-inline-block" action={handleSummon}>
