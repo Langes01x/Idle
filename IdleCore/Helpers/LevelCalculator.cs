@@ -25,22 +25,19 @@ public class LevelCalculator : ILevelCalculator
 
     // Level 1: 0 xp
     // Level 2: 15 xp
-    // Level 3: 138 xp
-    // Level 4: 657 xp
-    // Level 5: 2,172 xp
-    // Level 10: 82,647 xp
-    // Level 20: 2,902,497 xp
-    // Level 50: 300,365,247 xp
-    // Level 100: 9,802,960,497 xp
-    // Level 200: 316,823,840,997 xp
+    // Level 3: 80 xp
+    // Level 4: 256 xp
+    // Level 5: 625 xp
+    // Level 10: 10,001 xp
+    // Level 20: 160,008 xp
+    // Level 50: 6,250,321 xp
+    // Level 100: 100,104,030 xp
+    // Level 200: 12,422,639,408 xp
     private long CalculateExperienceRequirement(int level)
     {
-        return (long)Math.Pow(level, 5)
-            - (2 * (long)Math.Pow(level, 4))
-            + (3 * (long)Math.Pow(level, 3))
-            - (4 * (long)Math.Pow(level, 2))
-            + (5 * level)
-            - 3;
+        return (long)(Math.Pow(level, 4)
+            + Math.Pow(2, level / 6.0)
+            - 2);
     }
 
     public LevelCalculator()
