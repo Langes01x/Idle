@@ -41,11 +41,69 @@
 
 .level-pin {
     position: relative;
-    top: calc(50% - 118px);
+    top: calc(50% - 130px);
     width: 50px;
 }
 
 .level-text {
     position: relative;
     top: calc(50% + 10px);
+    font-size: x-large;
+    font-weight: bolder;
+    -webkit-text-stroke: 1px black;
+}
+
+.background-Crater,
+.background-Jungle,
+.background-Peninsula,
+.background-Plains,
+.background-Plateau,
+.background-River,
+.background-Ruins,
+.background-Shoreline,
+.background-Tundra,
+.background-Volcano {
+    background-size: cover;
+    background-position: center;
+    background-attachment: local;
+}
+
+.background-Shoreline {
+    background-image: url("../../public/Shoreline.jpeg");
+}
+
+.background-Peninsula {
+    background-image: url("../../public/Peninsula.jpeg");
+}
+
+.background-River {
+    background-image: url("../../public/River.jpeg");
+}
+
+.background-Plains {
+    background-image: url("../../public/Plains.jpeg");
+}
+
+.background-Tundra {
+    background-image: url("../../public/Tundra.jpeg");
+}
+
+.background-Plateau {
+    background-image: url("../../public/Plateau.jpeg");
+}
+
+.background-Jungle {
+    background-image: url("../../public/Jungle.jpeg");
+}
+
+.background-Ruins {
+    background-image: url("../../public/Ruins.jpeg");
+}
+
+.background-Crater {
+    background-image: url("../../public/Crater.jpeg");
+}
+
+.background-Volcano {
+    background-image: url("../../public/Volcano.jpeg");
 }

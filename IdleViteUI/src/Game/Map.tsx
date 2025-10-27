@@ -70,7 +70,7 @@ function Map() {
                 <Carousel.Caption>
                     <h2>Area {area.number}: {area.name}</h2>
                 </Carousel.Caption>
-                <div className="area">
+                <div className={"area background-" + area.name}>
                     {area.levels?.map(level => DisplayLevel(level, area))}
                 </div>
             </Carousel.Item>
