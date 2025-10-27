@@ -116,7 +116,7 @@ function Character() {
 
     return (
         <>
-            <div className="text-start">
+            <div className="game-header">
                 <Modal show={modalOpen} onHide={CloseModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>Dismiss Character?</Modal.Title>

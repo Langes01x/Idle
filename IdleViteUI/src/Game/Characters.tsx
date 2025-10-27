@@ -133,7 +133,7 @@ function Characters() {
     );
 
     return (
-        <div>
+        <div className="game">
             {
                 newCharacters &&
                 <Modal show={modalOpen} onHide={CloseModal}>
@@ -145,7 +145,7 @@ function Characters() {
                     </Modal.Body>
                 </Modal>
             }
-            <div className="text-start">
+            <div className="game-header">
                 {modelError && <div className="text-danger" role="alert">{modelError}</div>}
                 <Link to="/game" className="btn btn-primary">&lt;&lt; Back</Link>
                 <form className="d-inline-block" action={handleSummon}>
@@ -155,7 +155,7 @@ function Characters() {
                 <form className="d-inline-block" action={handleSummon}>
                     <input type="hidden" name="quantity" value="10" />
                     <button type="submit" className="btn btn-primary" disabled={(account?.hasUsedFreePull && !canSummonTen) || isPending}>Summon 10x for {account?.hasUsedFreePull ? summonCost * 10 : "Free"}</button>
-                </form >
+                </form>
                 <label>Diamonds:</label>
                 <output>{formatter.format(account!.diamonds)}</output>
                 <form className="float-end">

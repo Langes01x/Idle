@@ -23,10 +23,17 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .game-header {
     text-align: start;
+}
+
+.game-header a,
+.game-header button,
+.game-header .text-danger {
+    margin-right: 10px;
 }
 
 .game-nav {
@@ -36,5 +43,8 @@
 
 .game-nav>a {
     margin-top: 8px;
+}
+
+.game-nav>a:first-child {
     margin-left: 10px;
 }

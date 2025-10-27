@@ -321,14 +321,14 @@ function Parties() {
     );
 
     return (
-        <div>
-            <div className="text-start">
+        <div className="game">
+            <div className="game-header">
                 <Link to="/game" className="btn btn-primary">&lt;&lt; Back</Link>
             </div>
             <Carousel className="party-carousel" interval={null} activeIndex={partyIndex} onSelect={handleSelectParty}>
                 {parties.map(DisplayParty)}
             </Carousel>
-            <div className="text-start">
+            <div className="game-header">
                 <button className="btn btn-primary" onClick={handleAddParty} disabled={isAddPending}>Add Party</button>
                 {addError && <div className="text-danger d-inline-block" role="alert">{addError}</div>}
                 <button className="btn btn-primary" onClick={handleRemoveParty} disabled={selectedParty === undefined || isRemovePending}>Remove Party</button>
