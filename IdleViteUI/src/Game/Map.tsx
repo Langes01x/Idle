@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Carousel } from "react-bootstrap";
 import { useLoaderData } from "react-router";
 import AccountContext from "../Account/AccountContext";
@@ -63,13 +63,6 @@ function Map() {
     const areas = useLoaderData<AreaInfo[]>();
     const nextLevel = ((account?.levelsCleared ?? 0) % 20) + 1;
     const nextArea = Math.floor((account?.levelsCleared ?? 0) / 20) + 1;
-    const [areaIndex, setAreaIndex] = useState<number>(nextArea - 1);
-    const [, setSelectedArea] = useState<AreaInfo>(areas[nextArea - 1]);
-
-    function handleSelectArea(index: number) {
-        setAreaIndex(index);
-        setSelectedArea(areas[index]);
-    };
 
     function DisplayArea(area: AreaInfo) {
         return (
@@ -97,8 +90,7 @@ function Map() {
     };
 
     return (
-        <Carousel className="map" interval={null} activeIndex={areaIndex} onSelect={handleSelectArea}
-            wrap={false}>
+        <Carousel className="map" interval={null} wrap={false}>
             {areas.map(DisplayArea)}
         </Carousel>
     );
