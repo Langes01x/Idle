@@ -2,6 +2,7 @@ import { useActionState, useContext, useEffect, useState, type JSX } from "react
 import AccountContext, { type Account } from "../Account/AccountContext";
 import "./Game.css";
 import { Link } from "react-router";
+import Map from "./Map";
 
 function Game() {
     const { account, setAccount } = useContext(AccountContext);
@@ -57,27 +58,30 @@ function Game() {
     );
 
     return (
-        <div className="text-start">
-            <div className="info-grid w-200px">
-                <label>Experience:</label><output>{formatter.format(account!.experience)}</output>
-                <label>Gold:</label><output>{formatter.format(account!.gold)}</output>
-                <label>Diamonds:</label><output>{formatter.format(account!.diamonds)}</output>
-            </div>
-            <div className="rounded-box">
-                <form className="form-floating" action={handleCollect}>
-                    {modelError && <div className="text-danger" role="alert">{modelError}</div>}
-                    <button type="submit" className="w-100 btn btn-primary" disabled={isPending}>Collect Rewards</button>
-                </form>
+        <div className="game">
+            <div className="game-header">
                 <div className="info-grid w-200px">
-                    <label>Experience:</label><output>{formatter.format(experienceRewards)}</output>
-                    <label>Gold:</label><output>{formatter.format(goldRewards)}</output>
-                    <label>Diamonds:</label><output>{formatter.format(diamondRewards)}</output>
+                    <label>Experience:</label><output>{formatter.format(account!.experience)}</output>
+                    <label>Gold:</label><output>{formatter.format(account!.gold)}</output>
+                    <label>Diamonds:</label><output>{formatter.format(account!.diamonds)}</output>
+                </div>
+                <div className="rounded-box">
+                    <form className="form-floating" action={handleCollect}>
+                        {modelError && <div className="text-danger" role="alert">{modelError}</div>}
+                        <button type="submit" className="w-100 btn btn-primary" disabled={isPending}>Collect Rewards</button>
+                    </form>
+                    <div className="info-grid w-200px">
+                        <label>Experience:</label><output>{formatter.format(experienceRewards)}</output>
+                        <label>Gold:</label><output>{formatter.format(goldRewards)}</output>
+                        <label>Diamonds:</label><output>{formatter.format(diamondRewards)}</output>
+                    </div>
+                </div>
+                <div className="game-nav">
+                    <Link to="/game/characters" className="btn btn-primary">Characters</Link>
+                    <Link to="/game/parties" className="btn btn-primary">Parties</Link>
                 </div>
             </div>
-            <div>
-                <Link to="/game/characters" className="btn btn-primary">Characters</Link>
-                <Link to="/game/parties" className="btn btn-primary">Parties</Link>
-            </div>
+            <Map />
         </div>
     );
 };

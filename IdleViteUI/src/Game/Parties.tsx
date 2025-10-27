@@ -325,8 +325,7 @@ function Parties() {
             <div className="text-start">
                 <Link to="/game" className="btn btn-primary">&lt;&lt; Back</Link>
             </div>
-            <Carousel interval={null} activeIndex={partyIndex} onSelect={handleSelectParty}
-                indicatorLabels={parties.map((p, i) => p.name || "Party " + (i + 1))}>
+            <Carousel className="party-carousel" interval={null} activeIndex={partyIndex} onSelect={handleSelectParty}>
                 {parties.map(DisplayParty)}
             </Carousel>
             <div className="text-start">

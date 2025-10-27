@@ -24,6 +24,7 @@ import Characters, { CharactersLoader } from "./Game/Characters";
 import PersonalData from "./Account/Manage/PersonalData";
 import Character, { CharacterLoader } from "./Game/Character";
 import Parties, { PartiesLoader } from "./Game/Parties";
+import { AreasLoader } from "./Game/Map";
 
 const Router = createBrowserRouter([
     {
@@ -62,7 +63,7 @@ const Router = createBrowserRouter([
                 path: "game",
                 Component: GameLayout,
                 children: [
-                    { index: true, Component: Game },
+                    { index: true, Component: Game, loader: AreasLoader },
                     { path: "characters", Component: Characters, loader: CharactersLoader },
                     { path: "characters/:id", Component: Character, loader: CharacterLoader },
                     { path: "parties", Component: Parties, loader: PartiesLoader },

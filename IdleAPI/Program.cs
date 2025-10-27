@@ -43,6 +43,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAccountManager, AccountManager>();
 builder.Services.AddScoped<ICharacterManager, CharacterManager>();
 builder.Services.AddScoped<IPartyManager, PartyManager>();
+builder.Services.AddScoped<IAreaManager, AreaManager>();
 builder.Services.AddScoped<ISummonHelper, SummonHelper>();
 builder.Services.AddScoped<ILevelCalculator, LevelCalculator>();
 builder.Services.AddScoped<IStatCalculator, StatCalculator>();

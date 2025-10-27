@@ -5,6 +5,17 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container {
+  flex-grow: 1;
+}
+
+main {
+  height: 100%;
 }
 
 body {
@@ -95,4 +106,9 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: fit-content;
 }

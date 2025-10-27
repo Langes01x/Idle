@@ -30,10 +30,10 @@ function Layout() {
 
   return (
     <AccountContext value={{ account, setAccount }}>
-      <header>
+      <header className="main-header">
         <Nav />
       </header>
-      <div className="container">
+      <div className="main-container container">
         <main role="main">
           <Outlet />
         </main>
