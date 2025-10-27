@@ -102,7 +102,7 @@ function Parties() {
                         <button className="btn btn-primary" onClick={handleUpdateName} disabled={isUpdatePending}>Update</button>
                     </div>
                 </div>
-                <div className="char-grid">
+                <div className="char-grid party-grid">
                     <button className="btn btn-dark character-button" onClick={() => setSelectedPosition("Back")}>
                         <div className="new-char-container character">
                             {selectedPosition == "Back" ? <div className="new-char-border"></div> : <></>}

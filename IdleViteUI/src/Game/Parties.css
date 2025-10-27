@@ -7,5 +7,17 @@
 }
 
 .party-carousel {
-    min-height: 380px;
+    height: 390px;
+}
+
+.party-grid {
+    flex-wrap: nowrap;
+}
+
+.party-grid>.character-button:first-child {
+    margin-left: auto;
+}
+
+.party-grid>.character-button:last-child {
+    margin-right: auto;
 }

@@ -1,9 +1,16 @@
+.char-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: auto;
+}
+
 .char-grid>.character-button {
-    margin: 3px 3px;
+    margin: 2px 2px;
 }
 
 .char-grid>.character {
-    margin: 3px 3px;
+    margin: 2px 2px;
     display: inline-block;
 }
 

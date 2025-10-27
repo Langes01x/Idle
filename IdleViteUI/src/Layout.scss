@@ -3,19 +3,17 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 2rem 0 2rem;
   text-align: center;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .main-container {
   flex-grow: 1;
-}
-
-main {
-  height: 100%;
+  overflow: auto;
 }
 
 body {
@@ -108,7 +106,7 @@ button:focus-visible {
   }
 }
 
-.carousel-control-prev,
-.carousel-control-next {
-  width: fit-content;
+.carousel-inner,
+.carousel-item {
+  height: 100%;
 }
