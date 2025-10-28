@@ -17,13 +17,13 @@
 
 .level-container {
     margin: auto;
-    min-width: 100px;
+    min-width: 75px;
 }
 
 .level {
     margin: auto;
-    height: 150px;
-    width: 90px;
+    height: 120px;
+    width: 70px;
 }
 
 .level:hover {
@@ -35,24 +35,24 @@
 
 .level-node {
     position: relative;
-    top: calc(50% + 10px);
-    width: 50px;
+    top: calc(50% + 5px);
+    width: 40px;
 }
 
 .boss {
-    width: 75px;
+    width: 60px;
 }
 
 .level-pin {
     position: relative;
-    top: calc(50% - 130px);
-    width: 50px;
+    top: calc(50% - 110px);
+    width: 40px;
 }
 
 .level-text {
     position: relative;
-    top: calc(50% + 10px);
-    font-size: x-large;
+    top: calc(50%);
+    font-size: large;
     font-weight: bolder;
     -webkit-text-stroke: 1px black;
 }
