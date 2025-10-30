@@ -27,5 +27,7 @@ public class LevelModel
     public int GoldReward { get; set; }
     public int DiamondReward { get; set; }
 
-    public EnemyModel[]? Enemies { get; set; }
+    public EnemyModel? BackEnemy { get; set; }
+    public EnemyModel? MiddleEnemy { get; set; }
+    public EnemyModel? FrontEnemy { get; set; }
 }

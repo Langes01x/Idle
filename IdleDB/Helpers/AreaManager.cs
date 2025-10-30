@@ -39,7 +39,9 @@ public class AreaManager : IAreaManager
     public async Task<Level?> GetLevelDetails(int areaId, int levelId)
     {
         return await _context.Levels
-            .Include(l => l.Enemies)
+            .Include(l => l.BackEnemy)
+            .Include(l => l.MiddleEnemy)
+            .Include(l => l.FrontEnemy)
             .SingleOrDefaultAsync(l => l.Id == levelId && l.AreaId == areaId);
     }
 }

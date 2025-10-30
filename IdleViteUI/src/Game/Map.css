@@ -111,3 +111,40 @@
 .background-Volcano {
     background-image: url("../../public/Volcano.jpeg");
 }
+
+.enemy-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow: auto;
+}
+
+.enemy-grid>.enemy {
+    margin: 2px 2px;
+}
+
+.enemy {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    font-size: small;
+}
+
+.enemy-tooltip {
+    width: 250px;
+    background-color: darkblue;
+    visibility: hidden;
+    padding: 10px;
+    border-radius: 1rem;
+    position: absolute;
+    z-index: 1;
+    transform: translateY(-25%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.enemy:hover .enemy-tooltip {
+    visibility: visible;
+    opacity: 1;
+}

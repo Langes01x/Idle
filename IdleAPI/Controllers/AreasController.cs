@@ -41,7 +41,9 @@ public class AreasController : ControllerBase
 
         return new LevelModel(level)
         {
-            Enemies = level.Enemies.Select(e => new EnemyModel(e)).ToArray(),
+            BackEnemy = level.BackEnemy == null ? null : new EnemyModel(level.BackEnemy),
+            MiddleEnemy = level.MiddleEnemy == null ? null : new EnemyModel(level.MiddleEnemy),
+            FrontEnemy = level.FrontEnemy == null ? null : new EnemyModel(level.FrontEnemy),
         };
     }
 }

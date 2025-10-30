@@ -58,7 +58,9 @@ public class ApplicationDbContext : IdentityDbContext
         builder.Entity<Level>(b =>
         {
             b.HasKey(l => l.Id);
-            b.HasMany(l => l.Enemies).WithOne().HasPrincipalKey(l => l.Id).HasForeignKey(e => e.LevelId).IsRequired();
+            b.HasOne(l => l.BackEnemy).WithMany().HasPrincipalKey(e => e.Id).HasForeignKey(l => l.BackEnemyId);
+            b.HasOne(l => l.MiddleEnemy).WithMany().HasPrincipalKey(e => e.Id).HasForeignKey(l => l.MiddleEnemyId);
+            b.HasOne(l => l.FrontEnemy).WithMany().HasPrincipalKey(e => e.Id).HasForeignKey(l => l.FrontEnemyId);
         });
 
         builder.Entity<Area>(b =>

@@ -12,5 +12,12 @@ public class Level
     public int GoldReward { get; set; }
     public int DiamondReward { get; set; }
 
-    public ICollection<Enemy> Enemies { get; } = default!;
+    public int? BackEnemyId { get; set; }
+    public Enemy? BackEnemy { get; set; }
+
+    public int? MiddleEnemyId { get; set; }
+    public Enemy? MiddleEnemy { get; set; }
+
+    public int? FrontEnemyId { get; set; }
+    public Enemy? FrontEnemy { get; set; }
 }

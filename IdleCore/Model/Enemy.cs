@@ -4,8 +4,6 @@ public class Enemy
 {
     public int Id { get; set; }
 
-    public int LevelId { get; set; }
-
     public required string Name { get; set; }
 
     public decimal PhysicalDamage { get; set; }
