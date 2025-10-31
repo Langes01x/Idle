@@ -5,3 +5,6 @@ obj
 
 # The app database shouldn't be checked in
 app.db*
+
+# Lock files shouldn't be checked in
+.~lock*
