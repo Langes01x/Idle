@@ -13,7 +13,6 @@
 }
 
 .rounded-box {
-    background-color: darkblue;
     padding: .5rem;
     border-radius: 1rem;
     display: inline-block;
@@ -47,4 +46,8 @@
 
 .game-nav>a:first-child {
     margin-left: 10px;
+}
+
+.bg-rewards {
+    background-color: darkblue;
 }

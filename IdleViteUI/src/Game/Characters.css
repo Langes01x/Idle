@@ -17,6 +17,11 @@
 .character {
     height: 295px;
     width: 230px;
+    background-color: darkblue;
+}
+
+.bg-character {
+    background-color: darkblue;
 }
 
 .character-button {
@@ -28,7 +33,6 @@
 .new-char-container {
     position: relative;
     overflow: hidden;
-    background-color: darkblue;
     border-radius: 1rem;
 }
 
@@ -53,7 +57,7 @@
     width: 200%;
     transform: rotate(-45deg);
     overflow: hidden;
-    background: linear-gradient(to right, darkblue 10%, darkblue 30%, #ECD08C 50%, #ECD08C 70%, darkblue 80%, darkblue 100%);
+    background: linear-gradient(to right, darkblue 20%, #ECD08C 40%, #ECD08C 60%, darkblue 80%);
     background-size: 200% auto;
     animation: shine 3s linear infinite;
 }

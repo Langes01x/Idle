@@ -126,6 +126,7 @@
 .enemy {
     display: flex;
     justify-content: center;
+    background-color: darkred;
     height: 100%;
     width: 100%;
     font-size: small;
@@ -133,7 +134,7 @@
 
 .enemy-tooltip {
     width: 250px;
-    background-color: darkblue;
+    background-color: darkred;
     visibility: hidden;
     padding: 10px;
     border-radius: 1rem;

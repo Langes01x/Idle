@@ -65,7 +65,7 @@ function Game() {
                     <label>Gold:</label><output>{formatter.format(account!.gold)}</output>
                     <label>Diamonds:</label><output>{formatter.format(account!.diamonds)}</output>
                 </div>
-                <div className="rounded-box">
+                <div className="rounded-box bg-rewards">
                     <form className="form-floating" action={handleCollect}>
                         {modelError && <div className="text-danger" role="alert">{modelError}</div>}
                         <button type="submit" className="w-100 btn btn-primary" disabled={isPending}>Collect Rewards</button>

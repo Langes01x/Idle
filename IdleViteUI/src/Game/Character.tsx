@@ -144,7 +144,7 @@ function Character() {
                 <output>{compactFormatter.format(account!.experience)}</output>
                 <div className="row">
                     <div className="col-md-6 col-sm-12">
-                        <div className="rounded-box col-sm-12">
+                        <div className="rounded-box bg-character col-sm-12">
                             <div className="info-grid w-100">
                                 <label>Name:</label><output>{character.firstName} {character.lastName}</output>
                                 <label>Level:</label><output>{character.level}</output>
@@ -153,14 +153,14 @@ function Character() {
                             </div>
                         </div>
                         <hr />
-                        <div className="rounded-box col-sm-12">
+                        <div className="rounded-box bg-character col-sm-12">
                             <div className="info-grid w-100">
                                 <label>Total Experience:</label><output>{compactFormatter.format(character.experience)}</output>
                                 <label>To Next Level:</label><output>{compactFormatter.format(character.experienceToNextLevel)}</output>
                             </div>
                         </div>
                         <hr />
-                        <div className="rounded-box col-sm-12">
+                        <div className="rounded-box bg-character col-sm-12">
                             <div className="info-grid w-100">
                                 <label>Strength:</label><output>{character.strength}</output>
                                 <label>Intelligence:</label><output>{character.intelligence}</output>
@@ -175,7 +175,7 @@ function Character() {
                         <hr />
                     </div>
                     <div className="col-md-6">
-                        <div className="rounded-box col-sm-12">
+                        <div className="rounded-box bg-character col-sm-12">
                             <div className="info-grid w-100">
                                 <label>Physical Damage:</label><output>{statFormatter.format(character.physicalDamage)}</output>
                                 <label>Aether Damage:</label><output>{statFormatter.format(character.aetherDamage)}</output>
@@ -185,7 +185,7 @@ function Character() {
                             </div>
                         </div>
                         <hr />
-                        <div className="rounded-box col-sm-12">
+                        <div className="rounded-box bg-character col-sm-12">
                             <div className="info-grid w-100">
                                 <label>Health:</label><output>{statFormatter.format(character.health)}</output>
                                 <label>Armour:</label><output>{statFormatter.format(character.armour)}</output>
@@ -194,7 +194,7 @@ function Character() {
                             </div>
                         </div>
                         <hr />
-                        <div className="rounded-box col-sm-12">
+                        <div className="rounded-box bg-character col-sm-12">
                             <div className="info-grid col-md-4 col-sm-12">
                                 <label>Fire Resistance:</label><output>{percentFormatter.format(character.fireResistance)}</output>
                             </div>
