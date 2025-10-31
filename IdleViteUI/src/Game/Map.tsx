@@ -5,6 +5,8 @@ import AccountContext from "../Account/AccountContext";
 import pin from "../../public/pin.svg"
 import node from "../../public/node.svg"
 import "./Map.css"
+import FetchParties, { type PartyInfo } from "./FetchParties";
+import { DisplayCharacterInfo } from "./Characters";
 
 type AreaInfo = {
     id: number,
@@ -49,6 +51,14 @@ type AreaLevel = {
     area: AreaInfo,
 };
 
+function DisplayNoCharacter() {
+    return (
+        <div className="no-character-button">
+            x
+        </div>
+    );
+};
+
 export async function AreasLoader() {
     const response = await fetch("/api/Areas/", {
         method: "GET",
@@ -72,6 +82,8 @@ function Map() {
     const nextArea = Math.floor((account?.levelsCleared ?? 0) / 20) + 1;
     const [modalOpen, setModalOpen] = useState(true);
     const [selectedAreaLevel, setSelectedAreaLevel] = useState<AreaLevel | undefined>(undefined);
+    const [parties, setParties] = useState<PartyInfo[] | undefined>(undefined);
+    const [, setSelectedParty] = useState<PartyInfo | undefined>(undefined);
     const compactFormatter = new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 3 });
     const percentFormatter = new Intl.NumberFormat(undefined, { style: 'percent' });
     const speedFormatter = new Intl.NumberFormat(undefined, { style: 'unit', unit: 'second', maximumFractionDigits: 2 });
@@ -82,9 +94,44 @@ function Map() {
         setModalOpen(false);
     };
 
+    function handleSelectParty(index: number | undefined) {
+        setSelectedParty(index === undefined || parties === undefined ? undefined : parties[index]);
+    };
+
+    function DisplayParty(party: PartyInfo) {
+        return (
+            <Carousel.Item>
+                <div className="col-md-6 offset-md-3 info-grid">
+                    <label>Party Name:</label><output>{party.name}</output>
+                </div>
+                <div className="char-grid party-grid">
+                    <div className="new-char-container character">
+                        <div className="new-char-content">
+                            {party.backCharacter === null ? DisplayNoCharacter() : DisplayCharacterInfo(party.backCharacter)}
+                        </div>
+                    </div>
+                    <div className="new-char-container character">
+                        <div className="new-char-content">
+                            {party.middleCharacter === null ? DisplayNoCharacter() : DisplayCharacterInfo(party.middleCharacter)}
+                        </div>
+                    </div>
+                    <div className="new-char-container character">
+                        <div className="new-char-content">
+                            {party.frontCharacter === null ? DisplayNoCharacter() : DisplayCharacterInfo(party.frontCharacter)}
+                        </div>
+                    </div>
+                </div>
+            </Carousel.Item>
+        );
+    };
+
     const [levelSelectError, handleLevelSelect, isLevelSelectPending] = useActionState<JSX.Element | null | undefined, AreaLevel>(
         async (_previousState, areaLevel) => {
             try {
+                if (parties === undefined) {
+                    setParties(await FetchParties());
+                }
+
                 const response = await fetch("/api/Areas/" + areaLevel.area.id + "/Levels/" + areaLevel.level.id, {
                     method: "GET",
                     headers: {
@@ -178,7 +225,7 @@ function Map() {
         <>
             {
                 selectedAreaLevel &&
-                <Modal show={modalOpen} onHide={CloseModal}>
+                <Modal show={modalOpen} onHide={CloseModal} className="level-modal">
                     <Modal.Header closeButton>
                         <Modal.Title>Level: {selectedAreaLevel.area.number} - {selectedAreaLevel.level.number}</Modal.Title>
                     </Modal.Header>
@@ -195,6 +242,10 @@ function Map() {
                             <li>Gold: {compactFormatter.format(selectedAreaLevel.level.goldReward)}</li>
                             <li>Diamonds: {compactFormatter.format(selectedAreaLevel.level.diamondReward)}</li>
                         </ul>
+                        <h5>Party:</h5>
+                        <Carousel className="select-party-carousel" interval={null} onSelect={handleSelectParty}>
+                            {parties !== undefined ? parties.map(DisplayParty) : <></>}
+                        </Carousel>
                     </Modal.Body>
                 </Modal>
             }

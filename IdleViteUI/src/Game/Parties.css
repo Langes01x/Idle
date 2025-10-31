@@ -1,4 +1,4 @@
-.add-button {
+.no-character-button {
     display: flex;
     height: 270px;
     align-items: center;
@@ -19,5 +19,13 @@
 }
 
 .party-grid>.character-button:last-child {
+    margin-right: auto;
+}
+
+.party-grid>.character:first-child {
+    margin-left: auto;
+}
+
+.party-grid>.character:last-child {
     margin-right: auto;
 }

@@ -149,3 +149,16 @@
     visibility: visible;
     opacity: 1;
 }
+
+.level-modal>.modal-dialog {
+    width: 800px;
+}
+
+.select-party-carousel {
+    min-height: 370px;
+}
+
+.select-party-carousel .carousel-control-prev,
+.select-party-carousel .carousel-control-next {
+    width: fit-content;
+}

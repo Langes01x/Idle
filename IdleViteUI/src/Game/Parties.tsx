@@ -5,14 +5,7 @@ import { useActionState, useState, type ChangeEvent, type JSX } from "react";
 import { DisplayCharacterInfo } from "./Characters";
 import FetchCharacters from "./FetchCharacters";
 import "./Parties.css";
-
-type PartyInfo = {
-    id: number,
-    name: string | undefined,
-    backCharacter: CharacterInfo | null,
-    middleCharacter: CharacterInfo | null,
-    frontCharacter: CharacterInfo | null,
-};
+import FetchParties, { type PartyInfo } from "./FetchParties";
 
 type PartiesLoaderInfo = {
     parties: PartyInfo[],
@@ -23,27 +16,15 @@ type Position = "Back" | "Middle" | "Front";
 
 function DisplayAddToParty() {
     return (
-        <div className="add-button">
+        <div className="no-character-button">
             +
         </div>
     );
 };
 
 export async function PartiesLoader() {
-    const response = await fetch("/api/Parties/", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        credentials: "include",
-    });
-    if (!response.ok) {
-        const json = await response.json();
-        throw new Error(json.message || response.statusText);
-    }
-
     const loaderInfo: PartiesLoaderInfo = {
-        parties: await response.json() as PartyInfo[],
+        parties: await FetchParties(),
         getCharactersInfo: await FetchCharacters(null)
     };
     return loaderInfo;
@@ -169,7 +150,7 @@ function Parties() {
         return (
             <button className="btn btn-dark character-button" onClick={() => handleSetCharacter(null)}>
                 <div className="rounded-box character">
-                    <div className="add-button">
+                    <div className="no-character-button">
                         –
                     </div>
                 </div>
