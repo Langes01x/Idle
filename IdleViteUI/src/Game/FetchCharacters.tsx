@@ -1,10 +1,12 @@
+export type Rarity = "Common" | "Uncommon" | "Rare" | "Epic" | "Legendary";
+
 export type CharacterInfo = {
     id: number,
 
     experience: number,
     experienceToNextLevel: number,
     level: number,
-    rarity: string,
+    rarity: Rarity,
     class: string,
     firstName: string,
     lastName: string,

@@ -4,6 +4,11 @@ import { Link, useLoaderData, type Params } from "react-router";
 import "./Level.css"
 import AccountContext from "../Account/AccountContext";
 import FetchAccount from "../Account/FetchAccount";
+import type { Rarity } from "./FetchCharacters";
+
+type Position = "Front" | "Middle" | "Back";
+type Side = "Player" | "Enemy";
+type CombatResult = "Won" | "Lost" | "Draw";
 
 export type LevelInfo = {
     id: number,
@@ -41,7 +46,7 @@ export type CharacterSnapshotInfo = {
     level: number,
     health: number,
     currentHealth: number,
-    rarity: string,
+    rarity: Rarity,
     class: string,
     firstName: string,
     lastName: string,
@@ -49,9 +54,9 @@ export type CharacterSnapshotInfo = {
 
 export type CombatActionInfo = {
     time: number,
-    attackerSide: string,
-    attackerPosition: string,
-    defenderPosition: string,
+    attackerSide: Side,
+    attackerPosition: Position,
+    defenderPosition: Position,
     isDefenderDead: boolean,
     physicalDamageDealt: number,
     aetherDamageDealt: number,
@@ -68,7 +73,7 @@ export type CombatSummaryInfo = {
     frontCharacter: CharacterSnapshotInfo | null,
     level: LevelInfo,
     combatActions: CombatActionInfo[],
-    result: string,
+    result: CombatResult,
     rewardsGiven: boolean,
 };
 
