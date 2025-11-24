@@ -10,12 +10,13 @@ public interface ILevelCompletionHelper
     /// <param name="account">Account to update.</param>
     /// <param name="area">Area the level is in.</param>
     /// <param name="level">Level completed.</param>
-    void CompleteLevel(Account account, Area area, Level level);
+    /// <param name="combatSummary">Combat summary.</param>
+    void CompleteLevel(Account account, Area area, Level level, CombatSummary combatSummary);
 }
 
 public class LevelCompletionHelper : ILevelCompletionHelper
 {
-    public void CompleteLevel(Account account, Area area, Level level)
+    public void CompleteLevel(Account account, Area area, Level level, CombatSummary combatSummary)
     {
         var areaLevelNumber = (area.Number - 1) * 20 + level.Number;
         if (account.LevelsCleared + 1 == areaLevelNumber)
@@ -24,6 +25,7 @@ public class LevelCompletionHelper : ILevelCompletionHelper
             account.Experience += level.ExperienceReward;
             account.Gold += level.GoldReward;
             account.LevelsCleared = areaLevelNumber;
+            combatSummary.RewardsGiven = true;
         }
     }
 }

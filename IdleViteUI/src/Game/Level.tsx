@@ -69,6 +69,7 @@ export type CombatSummaryInfo = {
     level: LevelInfo,
     combatActions: CombatActionInfo[],
     result: string,
+    rewardsGiven: boolean,
 };
 
 export async function LevelLoader({ params, request }: { params: Params<"areaId" | "levelId">, request: Request }) {
@@ -91,8 +92,6 @@ export async function LevelLoader({ params, request }: { params: Params<"areaId"
 function Level() {
     const { setAccount } = useContext(AccountContext);
     const combatSummary = useLoaderData<CombatSummaryInfo>();
-    // TODO: Need some way to determine if rewards were paid out already
-    const rewardsAlreadyReceived = false;
     const compactFormatter = new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 3 });
     const statFormatter = new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 });
     const [time, setTime] = useState(0);
@@ -212,10 +211,10 @@ function Level() {
                             <div>
                                 <h5>Rewards:</h5>
                                 <ul>
-                                    {rewardsAlreadyReceived && <li>Rewards already received.</li>}
-                                    <li className={rewardsAlreadyReceived ? "received-reward" : ""}>Experience: {compactFormatter.format(combatSummary.level.experienceReward)}</li>
-                                    <li className={rewardsAlreadyReceived ? "received-reward" : ""}>Gold: {compactFormatter.format(combatSummary.level.goldReward)}</li>
-                                    <li className={rewardsAlreadyReceived ? "received-reward" : ""}>Diamonds: {compactFormatter.format(combatSummary.level.diamondReward)}</li>
+                                    {!combatSummary.rewardsGiven && <li>Rewards already received.</li>}
+                                    <li className={combatSummary.rewardsGiven ? "" : "received-reward"}>Experience: {compactFormatter.format(combatSummary.level.experienceReward)}</li>
+                                    <li className={combatSummary.rewardsGiven ? "" : "received-reward"}>Gold: {compactFormatter.format(combatSummary.level.goldReward)}</li>
+                                    <li className={combatSummary.rewardsGiven ? "" : "received-reward"}>Diamonds: {compactFormatter.format(combatSummary.level.diamondReward)}</li>
                                 </ul>
                             </div>
                         }

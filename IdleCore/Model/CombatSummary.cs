@@ -21,4 +21,6 @@ public class CombatSummary
     public ICollection<CombatAction> CombatActions { get; set; } = default!;
 
     public CombatResultEnum Result { get; set; }
+
+    public bool RewardsGiven { get; set; }
 }

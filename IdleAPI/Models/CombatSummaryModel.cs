@@ -14,6 +14,7 @@ public class CombatSummaryModel
     public CombatSummaryModel(CombatSummary combatSummary)
     {
         Result = combatSummary.Result.ToString();
+        RewardsGiven = combatSummary.RewardsGiven;
     }
 
     public CharacterSnapshotModel? BackCharacter { get; set; }
@@ -25,4 +26,6 @@ public class CombatSummaryModel
     public CombatActionModel[]? CombatActions { get; set; }
 
     public string Result { get; set; }
+
+    public bool RewardsGiven { get; set; }
 }

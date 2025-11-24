@@ -138,7 +138,7 @@ public class LevelsController : ControllerBase
         _combatSummaryManager.AddCombatSummary(combatSummary);
         if (combatSummary.Result == CombatResultEnum.Won)
         {
-            _levelCompletionHelper.CompleteLevel(account, area, level);
+            _levelCompletionHelper.CompleteLevel(account, area, level, combatSummary);
         }
         await _combatSummaryManager.SaveChanges();
 
