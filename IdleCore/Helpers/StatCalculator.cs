@@ -77,6 +77,13 @@ public interface IStatCalculator
     int CalculateCritRating(Character character, int dexterity);
 
     /// <summary>
+    /// Calculate the crit chance from the crit rating.
+    /// </summary>
+    /// <param name="critRating">Crit rating.</param>
+    /// <returns>Crit chance.</returns>
+    decimal CalculateCritChance(int critRating);
+
+    /// <summary>
     /// Calculate the crit multiplier of the character.
     /// </summary>
     /// <param name="character">Character to calculate for.</param>
@@ -97,6 +104,13 @@ public interface IStatCalculator
     /// <param name="vitality">Vitality of the character.</param>
     /// <returns>The character's health.</returns>
     int CalculateHealth(Character character, int vitality);
+
+    /// <summary>
+    /// Calculate the effect of the defence.
+    /// </summary>
+    /// <param name="defence">Armour or barrier value.</param>
+    /// <returns>Effect of the armour or barrier.</returns>
+    decimal CalculateDefenceEffect(int defence);
 
     /// <summary>
     /// Calculate the armour of the character.
@@ -145,34 +159,44 @@ public interface IStatCalculator
 
 public class StatCalculator : IStatCalculator
 {
+    private static int CalculateMainStat(Character character, int level, StatEnum stat)
+    {
+        return (character.Class.HasFlag(stat) ? 2 : 0) * level * (int)character.Rarity;
+    }
+
+    private static int CalculateSecondaryStat(Character character, int level, StatEnum stat)
+    {
+        return (character.Class.HasFlag(stat) ? 2 : 1) * level * (int)character.Rarity;
+    }
+
     public int CalculateStrength(Character character, int level)
     {
-        return (character.Class.HasFlag(StatEnum.Strength) ? 2 : 0) * level * (int)character.Rarity;
+        return CalculateMainStat(character, level, StatEnum.Strength);
     }
 
     public int CalculateIntelligence(Character character, int level)
     {
-        return (character.Class.HasFlag(StatEnum.Intelligence) ? 2 : 0) * level * (int)character.Rarity;
+        return CalculateMainStat(character, level, StatEnum.Intelligence);
     }
 
     public int CalculateDexterity(Character character, int level)
     {
-        return (character.Class.HasFlag(StatEnum.Dexterity) ? 2 : 1) * level * (int)character.Rarity;
+        return CalculateSecondaryStat(character, level, StatEnum.Dexterity);
     }
 
     public int CalculateVitality(Character character, int level)
     {
-        return (character.Class.HasFlag(StatEnum.Vitality) ? 2 : 1) * level * (int)character.Rarity;
+        return CalculateSecondaryStat(character, level, StatEnum.Vitality);
     }
 
     public int CalculateConstitution(Character character, int level)
     {
-        return (character.Class.HasFlag(StatEnum.Constitution) ? 2 : 1) * level * (int)character.Rarity;
+        return CalculateSecondaryStat(character, level, StatEnum.Constitution);
     }
 
     public int CalculateWisdom(Character character, int level)
     {
-        return (character.Class.HasFlag(StatEnum.Wisdom) ? 2 : 1) * level * (int)character.Rarity;
+        return CalculateSecondaryStat(character, level, StatEnum.Wisdom);
     }
 
     public decimal CalculatePhysicalDamage(Character character, int strength)
@@ -190,6 +214,11 @@ public class StatCalculator : IStatCalculator
         return dexterity;
     }
 
+    public decimal CalculateCritChance(int critRating)
+    {
+        return 0.05m + (critRating / 4000m);
+    }
+
     public decimal CalculateCritMultiplier(Character character)
     {
         return 2.0m;
@@ -203,6 +232,11 @@ public class StatCalculator : IStatCalculator
     public int CalculateHealth(Character character, int vitality)
     {
         return 100 + (vitality * 10);
+    }
+
+    public decimal CalculateDefenceEffect(int defence)
+    {
+        return (decimal)(1.7 / Math.PI * Math.Atan(defence * 0.0007));
     }
 
     public int CalculateArmour(Character character, int constitution)

@@ -25,6 +25,7 @@ import PersonalData from "./Account/Manage/PersonalData";
 import Character, { CharacterLoader } from "./Game/Character";
 import Parties, { PartiesLoader } from "./Game/Parties";
 import { AreasLoader } from "./Game/Map";
+import Level, { LevelLoader } from "./Game/Level";
 
 const Router = createBrowserRouter([
     {
@@ -67,6 +68,7 @@ const Router = createBrowserRouter([
                     { path: "characters", Component: Characters, loader: CharactersLoader },
                     { path: "characters/:id", Component: Character, loader: CharacterLoader },
                     { path: "parties", Component: Parties, loader: PartiesLoader },
+                    { path: "areas/:areaId/levels/:levelId", Component: Level, loader: LevelLoader },
                 ],
             },
         ],

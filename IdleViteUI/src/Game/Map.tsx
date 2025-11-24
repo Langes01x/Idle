@@ -1,49 +1,19 @@
 import { useActionState, useContext, useState, type JSX } from "react";
 import { Carousel, Modal } from "react-bootstrap";
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import AccountContext from "../Account/AccountContext";
 import pin from "../../public/pin.svg"
 import node from "../../public/node.svg"
 import "./Map.css"
 import FetchParties, { type PartyInfo } from "./FetchParties";
 import { DisplayCharacterInfo } from "./Characters";
+import type { EnemyInfo, LevelInfo } from "./Level";
 
-type AreaInfo = {
+export type AreaInfo = {
     id: number,
     number: number,
     name: string,
     levels: LevelInfo[] | null,
-};
-
-type LevelInfo = {
-    id: number,
-    number: number,
-    experienceReward: number,
-    goldReward: number,
-    diamondReward: number,
-    backEnemy: EnemyInfo | null,
-    middleEnemy: EnemyInfo | null,
-    frontEnemy: EnemyInfo | null,
-};
-
-type EnemyInfo = {
-    id: number,
-    name: string,
-    physicalDamage: number,
-    aetherDamage: number,
-    fireDamage: number,
-    coldDamage: number,
-    poisonDamage: number,
-    critRating: number,
-    critMultiplier: number,
-    actionSpeed: number,
-    health: number,
-    armour: number,
-    barrier: number,
-    evasion: number,
-    fireResistance: number,
-    coldResistance: number,
-    poisonResistance: number,
 };
 
 type AreaLevel = {
@@ -83,7 +53,7 @@ function Map() {
     const [modalOpen, setModalOpen] = useState(true);
     const [selectedAreaLevel, setSelectedAreaLevel] = useState<AreaLevel | undefined>(undefined);
     const [parties, setParties] = useState<PartyInfo[] | undefined>(undefined);
-    const [, setSelectedParty] = useState<PartyInfo | undefined>(undefined);
+    const [selectedParty, setSelectedParty] = useState<PartyInfo | undefined>(parties !== undefined && parties.some(Boolean) ? parties[0] : undefined);
     const compactFormatter = new Intl.NumberFormat(undefined, { notation: 'compact', maximumFractionDigits: 3 });
     const percentFormatter = new Intl.NumberFormat(undefined, { style: 'percent' });
     const speedFormatter = new Intl.NumberFormat(undefined, { style: 'unit', unit: 'second', maximumFractionDigits: 2 });
@@ -105,20 +75,14 @@ function Map() {
                     <label>Party Name:</label><output>{party.name}</output>
                 </div>
                 <div className="char-grid party-grid">
-                    <div className="new-char-container character">
-                        <div className="new-char-content">
-                            {party.backCharacter === null ? DisplayNoCharacter() : DisplayCharacterInfo(party.backCharacter)}
-                        </div>
+                    <div className="rounded-box character bg-character size-character">
+                        {party.backCharacter === null ? DisplayNoCharacter() : DisplayCharacterInfo(party.backCharacter)}
                     </div>
-                    <div className="new-char-container character">
-                        <div className="new-char-content">
-                            {party.middleCharacter === null ? DisplayNoCharacter() : DisplayCharacterInfo(party.middleCharacter)}
-                        </div>
+                    <div className="rounded-box character bg-character size-character">
+                        {party.middleCharacter === null ? DisplayNoCharacter() : DisplayCharacterInfo(party.middleCharacter)}
                     </div>
-                    <div className="new-char-container character">
-                        <div className="new-char-content">
-                            {party.frontCharacter === null ? DisplayNoCharacter() : DisplayCharacterInfo(party.frontCharacter)}
-                        </div>
+                    <div className="rounded-box character bg-character size-character">
+                        {party.frontCharacter === null ? DisplayNoCharacter() : DisplayCharacterInfo(party.frontCharacter)}
                     </div>
                 </div>
             </Carousel.Item>
@@ -129,7 +93,11 @@ function Map() {
         async (_previousState, areaLevel) => {
             try {
                 if (parties === undefined) {
-                    setParties(await FetchParties());
+                    const parties = await FetchParties();
+                    setParties(parties);
+                    if (parties.some(Boolean)) {
+                        setSelectedParty(parties[0]);
+                    }
                 }
 
                 const response = await fetch("/api/Areas/" + areaLevel.area.id + "/Levels/" + areaLevel.level.id, {
@@ -175,18 +143,18 @@ function Map() {
     function DisplayLevel(areaLevel: AreaLevel) {
         return (
             <div className="level-container">
-                <div className="level" onClick={() => handleLevelSelect(areaLevel)} aria-disabled={isLevelSelectPending}>
+                <button className="level" onClick={() => handleLevelSelect(areaLevel)} aria-disabled={isLevelSelectPending}>
                     <img className={"level-node" + ((areaLevel.level.number - 1) % 10 === 9 ? " boss" : "")} src={node} />
                     <p className="level-text">{areaLevel.area.number} - {areaLevel.level.number}</p>
                     {areaLevel.level.number === nextLevel && areaLevel.area.number === nextArea && <img className="level-pin" src={pin} />}
-                </div>
+                </button>
             </div>
         );
     };
 
     function DisplayEnemy(enemy: EnemyInfo) {
         return (
-            <div className="rounded-box enemy">
+            <div className="rounded-box enemy bg-enemy size-100 d-flex justify-content-center">
                 {enemy.name}
                 <div className="enemy-tooltip">
                     <div className="info-grid w-100">
@@ -221,6 +189,48 @@ function Map() {
         )
     };
 
+    function DisplayLevelDetails(areaLevel: AreaLevel | undefined) {
+        if (areaLevel === undefined) {
+            return (<></>);
+        }
+        const rewardsAlreadyReceived = areaLevel.area.number < nextArea ||
+            (areaLevel.area.number == nextArea && areaLevel.level.number < nextLevel);
+        const levelHasEnemies = areaLevel.level.frontEnemy !== null || areaLevel.level.middleEnemy !== null || areaLevel.level.backEnemy !== null;
+        const canAttemptLevel = (areaLevel.area.number < nextArea ||
+            (areaLevel.area.number == nextArea && areaLevel.level.number <= nextLevel));
+        const partyHasCharacters = selectedParty !== undefined &&
+            (selectedParty.frontCharacter !== null || selectedParty.middleCharacter !== null || selectedParty.backCharacter !== null);
+        const disableAttemptButton = !levelHasEnemies || !partyHasCharacters;
+        return (
+            <Modal.Body>
+                <h5>Enemies:</h5>
+                <div className="enemy-grid">
+                    {!levelHasEnemies && <div className="text-danger" role="alert">Level has no enemies.</div>}
+                    {areaLevel.level.frontEnemy && DisplayEnemy(areaLevel.level.frontEnemy)}
+                    {areaLevel.level.middleEnemy && DisplayEnemy(areaLevel.level.middleEnemy)}
+                    {areaLevel.level.backEnemy && DisplayEnemy(areaLevel.level.backEnemy)}
+                </div>
+                <h5>Rewards:</h5>
+                <ul>
+                    {rewardsAlreadyReceived && <li>Rewards already received.</li>}
+                    <li className={rewardsAlreadyReceived ? "received-reward" : ""}>Experience: {compactFormatter.format(areaLevel.level.experienceReward)}</li>
+                    <li className={rewardsAlreadyReceived ? "received-reward" : ""}>Gold: {compactFormatter.format(areaLevel.level.goldReward)}</li>
+                    <li className={rewardsAlreadyReceived ? "received-reward" : ""}>Diamonds: {compactFormatter.format(areaLevel.level.diamondReward)}</li>
+                </ul>
+                {
+                    canAttemptLevel &&
+                    <>
+                        <h5>Party:</h5>
+                        <Carousel className="select-party-carousel" interval={null} onSelect={handleSelectParty}>
+                            {parties !== undefined ? parties.map(DisplayParty) : <></>}
+                        </Carousel>
+                        <Link to={{ pathname: "/game/areas/" + areaLevel.area.id + "/levels/" + areaLevel.level.id, search: "?partyId=" + selectedParty?.id }} className={"btn btn-primary float-end" + (disableAttemptButton ? " disabled" : "")} aria-disabled={disableAttemptButton}>Attempt</Link>
+                    </>
+                }
+            </Modal.Body>
+        )
+    }
+
     return (
         <>
             {
@@ -229,24 +239,7 @@ function Map() {
                     <Modal.Header closeButton>
                         <Modal.Title>Level: {selectedAreaLevel.area.number} - {selectedAreaLevel.level.number}</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
-                        <h5>Enemies:</h5>
-                        <div className="enemy-grid">
-                            {selectedAreaLevel.level.frontEnemy && DisplayEnemy(selectedAreaLevel.level.frontEnemy)}
-                            {selectedAreaLevel.level.middleEnemy && DisplayEnemy(selectedAreaLevel.level.middleEnemy)}
-                            {selectedAreaLevel.level.backEnemy && DisplayEnemy(selectedAreaLevel.level.backEnemy)}
-                        </div>
-                        <h5>Rewards:</h5>
-                        <ul>
-                            <li>Experience: {compactFormatter.format(selectedAreaLevel.level.experienceReward)}</li>
-                            <li>Gold: {compactFormatter.format(selectedAreaLevel.level.goldReward)}</li>
-                            <li>Diamonds: {compactFormatter.format(selectedAreaLevel.level.diamondReward)}</li>
-                        </ul>
-                        <h5>Party:</h5>
-                        <Carousel className="select-party-carousel" interval={null} onSelect={handleSelectParty}>
-                            {parties !== undefined ? parties.map(DisplayParty) : <></>}
-                        </Carousel>
-                    </Modal.Body>
+                    {DisplayLevelDetails(selectedAreaLevel)}
                 </Modal>
             }
             {levelSelectError && <div className="text-danger" role="alert">{levelSelectError}</div>}

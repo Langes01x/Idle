@@ -14,10 +14,9 @@
     display: inline-block;
 }
 
-.character {
+.size-character {
     height: 295px;
     width: 230px;
-    background-color: darkblue;
 }
 
 .bg-character {

@@ -10,7 +10,7 @@ import FetchCharacters from "./FetchCharacters";
 function DisplayCharacter(char: CharacterInfo) {
     return (
         <Link className="btn btn-dark character-button" to={"/game/characters/" + char.id}>
-            <div className="rounded-box character">
+            <div className="rounded-box bg-character size-character">
                 {DisplayCharacterInfo(char)}
             </div>
         </Link>
@@ -56,7 +56,7 @@ function DisplayNewCharacter(char: CharacterInfo) {
             break;
     };
     return (
-        <div className="new-char-container character">
+        <div className="new-char-container character bg-character size-character">
             <div className={"new-char-border " + opacity}></div>
             <div className="new-char-content">
                 {DisplayCharacterInfo(char)}

@@ -12,6 +12,13 @@ public interface IAreaManager
     Task<Area[]> GetAreas();
 
     /// <summary>
+    /// Gets information about an area.
+    /// </summary>
+    /// <param name="areaId">Area ID.</param>
+    /// <returns>The area if it exists.</returns>
+    Task<Area?> GetArea(int areaId);
+
+    /// <summary>
     /// Gets detailed information about a level.
     /// </summary>
     /// <param name="areaId">Area ID.</param>
@@ -34,6 +41,12 @@ public class AreaManager : IAreaManager
         return await _context.Areas
             .Include(p => p.Levels)
             .ToArrayAsync();
+    }
+
+    public async Task<Area?> GetArea(int areaId)
+    {
+        return await _context.Areas
+            .SingleOrDefaultAsync(l => l.Id == areaId);
     }
 
     public async Task<Level?> GetLevelDetails(int areaId, int levelId)

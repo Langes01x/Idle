@@ -1,5 +1,6 @@
 using IdleAPI.Converters;
 using IdleCore.Helpers;
+using IdleCore.Helpers.Combat;
 using IdleDB;
 using IdleDB.Helpers;
 using Microsoft.AspNetCore.Http.Json;
@@ -28,14 +29,24 @@ builder.Services.Configure<IdentityOptions>(o =>
     o.Tokens.AuthenticatorIssuer = "IdleAPI";
 });
 
-// Fix JSON body conversion of true / false string values to booleans
 builder.Services.Configure<JsonOptions>(o =>
 {
+    // Fix JSON body conversion of true / false string values to booleans
     o.SerializerOptions.Converters.Add(new BooleanConverter());
     o.SerializerOptions.Converters.Add(new NullableBooleanConverter());
+    // Javascript doesn't have support for TimeSpan so just treat it as number of milliseconds
+    o.SerializerOptions.Converters.Add(new TimeSpanConverter());
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(o =>
+    {
+        // Fix JSON body conversion of true / false string values to booleans
+        o.JsonSerializerOptions.Converters.Add(new BooleanConverter());
+        o.JsonSerializerOptions.Converters.Add(new NullableBooleanConverter());
+        // Javascript doesn't have support for TimeSpan so just treat it as number of milliseconds
+        o.JsonSerializerOptions.Converters.Add(new TimeSpanConverter());
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -44,12 +55,20 @@ builder.Services.AddScoped<IAccountManager, AccountManager>();
 builder.Services.AddScoped<ICharacterManager, CharacterManager>();
 builder.Services.AddScoped<IPartyManager, PartyManager>();
 builder.Services.AddScoped<IAreaManager, AreaManager>();
+builder.Services.AddScoped<ICombatSummaryManager, CombatSummaryManager>();
 builder.Services.AddScoped<ISummonHelper, SummonHelper>();
 builder.Services.AddScoped<ILevelCalculator, LevelCalculator>();
 builder.Services.AddScoped<IStatCalculator, StatCalculator>();
 builder.Services.AddScoped<ICollectionHelper, CollectionHelper>();
 builder.Services.AddScoped<ICharacterSorter, CharacterSorter>();
 builder.Services.AddScoped<IEnumMapper, EnumMapper>();
+builder.Services.AddScoped<IAttackCalculator, AttackCalculator>();
+builder.Services.AddScoped<ICombatHelper, CombatHelper>();
+builder.Services.AddScoped<ICombatParticipantFactory, CombatParticipantFactory>();
+builder.Services.AddScoped<IDamageApplicator, DamageApplicator>();
+builder.Services.AddScoped<IDamageCalculator, DamageCalculator>();
+builder.Services.AddScoped<ICharacterSnapshotter, CharacterSnapshotter>();
+builder.Services.AddScoped<ILevelCompletionHelper, LevelCompletionHelper>();
 builder.Services.AddScoped<Random>();
 
 var app = builder.Build();

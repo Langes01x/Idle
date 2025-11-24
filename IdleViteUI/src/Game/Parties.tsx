@@ -85,7 +85,7 @@ function Parties() {
                 </div>
                 <div className="char-grid party-grid">
                     <button className="btn btn-dark character-button" onClick={() => setSelectedPosition("Back")}>
-                        <div className="new-char-container character">
+                        <div className="new-char-container bg-character size-character">
                             {selectedPosition == "Back" ? <div className="new-char-border"></div> : <></>}
                             <div className="new-char-content">
                                 {party.backCharacter === null ? DisplayAddToParty() : DisplayCharacterInfo(party.backCharacter)}
@@ -93,7 +93,7 @@ function Parties() {
                         </div>
                     </button>
                     <button className="btn btn-dark character-button" onClick={() => setSelectedPosition("Middle")}>
-                        <div className="new-char-container character">
+                        <div className="new-char-container bg-character size-character">
                             {selectedPosition == "Middle" ? <div className="new-char-border"></div> : <></>}
                             <div className="new-char-content">
                                 {party.middleCharacter === null ? DisplayAddToParty() : DisplayCharacterInfo(party.middleCharacter)}
@@ -101,7 +101,7 @@ function Parties() {
                         </div>
                     </button>
                     <button className="btn btn-dark character-button" onClick={() => setSelectedPosition("Front")}>
-                        <div className="new-char-container character">
+                        <div className="new-char-container bg-character size-character">
                             {selectedPosition == "Front" ? <div className="new-char-border"></div> : <></>}
                             <div className="new-char-content">
                                 {party.frontCharacter === null ? DisplayAddToParty() : DisplayCharacterInfo(party.frontCharacter)}
@@ -123,7 +123,7 @@ function Parties() {
         }
         return (
             <button className="btn btn-dark character-button" onClick={() => handleSetCharacter(char)}>
-                <div className="rounded-box character">
+                <div className="rounded-box bg-character size-character">
                     {DisplayCharacterInfo(char)}
                 </div>
             </button>
@@ -149,7 +149,7 @@ function Parties() {
         }
         return (
             <button className="btn btn-dark character-button" onClick={() => handleSetCharacter(null)}>
-                <div className="rounded-box character">
+                <div className="rounded-box bg-character size-character">
                     <div className="no-character-button">
                         –
                     </div>

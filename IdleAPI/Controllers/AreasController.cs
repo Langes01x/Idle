@@ -28,22 +28,4 @@ public class AreasController : ControllerBase
             })
             .ToArray();
     }
-
-    // Display a level.
-    [HttpGet("{areaId:int}/Levels/{levelId:int}")]
-    public async Task<ActionResult<LevelModel>> GetLevel(int areaId, int levelId)
-    {
-        var level = await _areaManager.GetLevelDetails(areaId, levelId);
-        if (level == null)
-        {
-            return NotFound();
-        }
-
-        return new LevelModel(level)
-        {
-            BackEnemy = level.BackEnemy == null ? null : new EnemyModel(level.BackEnemy),
-            MiddleEnemy = level.MiddleEnemy == null ? null : new EnemyModel(level.MiddleEnemy),
-            FrontEnemy = level.FrontEnemy == null ? null : new EnemyModel(level.FrontEnemy),
-        };
-    }
 }

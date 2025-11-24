@@ -17,8 +17,9 @@ public interface IPartyManager
     /// </summary>
     /// <param name="id">Party ID.</param>
     /// <param name="userId">Account ID.</param>
+    /// <param name="includeCharacters">Include associated characters</param>
     /// <returns>The party if it exists.</returns>
-    Task<Party?> GetParty(int id, string userId);
+    Task<Party?> GetParty(int id, string userId, bool includeCharacters = false);
 
     /// <summary>
     /// Creates a new party.
@@ -57,9 +58,18 @@ public class PartyManager : IPartyManager
             .ToArrayAsync();
     }
 
-    public async Task<Party?> GetParty(int id, string userId)
+    public async Task<Party?> GetParty(int id, string userId, bool includeCharacters = false)
     {
-        return await _context.Parties.SingleOrDefaultAsync(c => c.Id == id && c.AccountId == userId);
+        IQueryable<Party> query = _context.Parties;
+        if (includeCharacters)
+        {
+            query = query
+                .Include(p => p.BackCharacter)
+                .Include(p => p.MiddleCharacter)
+                .Include(p => p.FrontCharacter);
+        }
+        return await query
+            .SingleOrDefaultAsync(c => c.Id == id && c.AccountId == userId);
     }
 
     public void CreateParty(Party party)

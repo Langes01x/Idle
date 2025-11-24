@@ -25,6 +25,12 @@ public class ApplicationDbContext : IdentityDbContext
 
     public DbSet<Enemy> Enemies { get; set; } = default!;
 
+    public DbSet<CombatSummary> CombatSummaries { get; set; } = default!;
+
+    public DbSet<CharacterSnapshot> CharacterSnapshots { get; set; } = default!;
+
+    public DbSet<CombatAction> CombatActions { get; set; } = default!;
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -67,6 +73,27 @@ public class ApplicationDbContext : IdentityDbContext
         {
             b.HasKey(a => a.Id);
             b.HasMany(a => a.Levels).WithOne().HasPrincipalKey(a => a.Id).HasForeignKey(l => l.AreaId).IsRequired();
+        });
+
+        builder.Entity<CharacterSnapshot>(b =>
+        {
+            b.HasKey(e => e.Id);
+        });
+
+        builder.Entity<CombatAction>(b =>
+        {
+            b.HasKey(a => a.Id);
+        });
+
+        builder.Entity<CombatSummary>(b =>
+        {
+            b.HasKey(s => s.Id);
+            b.HasOne<Account>().WithMany().HasPrincipalKey(a => a.Id).HasForeignKey(s => s.AccountId).IsRequired();
+            b.HasOne(s => s.Level).WithMany().HasPrincipalKey(l => l.Id).HasForeignKey(s => s.LevelId).IsRequired();
+            b.HasMany(s => s.CombatActions).WithOne().HasPrincipalKey(s => s.Id).HasForeignKey(a => a.CombatSummaryId).IsRequired();
+            b.HasOne(s => s.BackCharacter).WithMany().HasPrincipalKey(c => c.Id).HasForeignKey(s => s.BackCharacterId);
+            b.HasOne(s => s.MiddleCharacter).WithMany().HasPrincipalKey(c => c.Id).HasForeignKey(s => s.MiddleCharacterId);
+            b.HasOne(s => s.FrontCharacter).WithMany().HasPrincipalKey(c => c.Id).HasForeignKey(s => s.FrontCharacterId);
         });
     }
 

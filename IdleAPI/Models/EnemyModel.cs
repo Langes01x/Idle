@@ -24,6 +24,7 @@ public class EnemyModel
         CritMultiplier = enemy.CritMultiplier;
         ActionSpeed = enemy.ActionSpeed;
         Health = enemy.Health;
+        CurrentHealth = enemy.Health;
         Armour = enemy.Armour;
         Barrier = enemy.Barrier;
         Evasion = enemy.Evasion;
@@ -47,6 +48,7 @@ public class EnemyModel
     public decimal ActionSpeed { get; set; }
 
     public int Health { get; set; }
+    public int CurrentHealth { get; set; }
     public int Armour { get; set; }
     public int Barrier { get; set; }
     public decimal Evasion { get; set; }
